@@ -1,0 +1,35 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "CHIease"
+			}
+		},
+		{
+			"path": "pages/common/web-view/index",
+			"style": {
+				"navigationBarTitleText": "CHIease"
+			}
+		},
+		{
+			"path": "pages/share/spoken/index",
+			"style": {
+				"navigationBarTitleText": "口语课分享页",
+				 "app-plus": {"titleNView": false} 
+			}
+		},
+		{
+			"path": "pages/share/dub/index",
+			"style": {
+				"navigationBarTitleText": "配音课分享页"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "CHIease",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
