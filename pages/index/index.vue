@@ -2,6 +2,7 @@
 	<view class="page_list">
 		<navigator class="a" url="../share/dub/index">配音课分享页</navigator>
 		<navigator class="a" url="../share/spoken/index">口语课分享页</navigator>
+		<navigator class="a" url="../static/pinyin-table/index">口语课分享页</navigator>
 	</view>
 </template>
 
@@ -13,7 +14,7 @@
 			}
 		},
 		onLoad() {
-
+			
 		},
 		methods: {
 

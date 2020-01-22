@@ -2,6 +2,7 @@
 export default {
 	imgUrl	: '/static/images',		//图片地址前缀
 	apiUrl	: 'https://test.5ideachinese.com',	//接口地址前缀
+	pinyinUrl: 'https://test.5ideachinese.com/profile',	//拼音表地址前缀
 	isTest	: false,	//是否开启测试
 	source	: 'h5',		//来源
 	sid		: '',		//APP  	5idea-sid

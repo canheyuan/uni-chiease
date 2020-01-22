@@ -24,8 +24,22 @@
 			"style": {
 				"navigationBarTitleText": "配音课分享页"
 			}
+		},
+		{
+			"path": "pages/static/pinyin-table/index",
+			"style": {
+				"navigationBarTitleText": "拼音表",
+				"app-plus": {"titleNView": false} 
+			}
 		}
-	],
+	    ,{
+            "path" : "pages/textbook/index/index",
+            "style": {
+            	"navigationBarTitleText": "国际职场通用汉语",
+            	"app-plus": {"titleNView": false} 
+            }
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "CHIease",

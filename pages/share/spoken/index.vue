@@ -4,11 +4,11 @@
 		<download-top></download-top>
 		
 		<!--口语课头部-->
-		<view class="spoken_head">
+		<view class="spoken_head" v-if="detailData">
 			<view class="spoken_data">
 				<view class="title">
-					<view class="h3">广场舞</view>
-					<view class="p">Square dance</view>
+					<view class="h3">{{detailData.chapterName['zh']}}</view>
+					<view class="p">{{detailData.chapterName['en']}}</view>
 				</view>
 				<!--图表-->
 				<view class="spoken_charts" id="spoken_charts"></view>
@@ -16,7 +16,7 @@
 				<view class="shadow_bg"></view>
 			</view>
 			<view class="share_user">
-				<view class="per_img"><img src="https://test.5ideachinese.com/profile/2019/03/1a0f37e5203e8b8e0fa73282edcd9fcb.jpg" alt=""></view>
+				<view class="per_img"><img :src="detailData.headImg" alt=""></view>
 				<navigator class="btn" url="../dub/index?source=app">
 					我要挑战
 				</navigator>
@@ -45,26 +45,29 @@
 		},
 		data() {
 			return {
-				imgUrl:this.$common.imgUrl
+				imgUrl:this.$common.imgUrl,
+				detailData:null,
+				shareId:'b5c31a79257ffb3ac2c3af79377932f6',	//分享id
 			}
 		},
 		onLoad(options) {
 			console.log('spoken-onLoad-options:',options)
 			this.$common.source == options.source?options.source:'h5'
-			
-			this.getShareDetailFn();
+			//this.shareId = options.shareid?options.shareid:''
+			this.getShareDetailFn(this.shareId);
 		},
 		methods: {
-			getShareDetailFn(){
-				var shareId = 'b5c31a79257ffb3ac2c3af79377932f6'
+			//获取分享详情信息
+			getShareDetailFn(shareId){
 				this.$http({
 					url:`/api/shareInfo/oralChaShareInfo/${shareId}`,
 					success:(res)=>{
 						var detailData =  res.data;
+						this.detailData = detailData
 						console.log('口语课分享详情：',detailData)
 					}
 				},this)
-			}
+			},
 		}
 	}
 </script>
