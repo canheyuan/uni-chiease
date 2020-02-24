@@ -46,7 +46,7 @@
 			
 			<!-- 第2条 -->
 			<view class="supplement_item clearfix">
-				<view class="num">1</view>
+				<view class="num">2</view>
 				<view class="item">
 					<view class="text1 tri">我</view>
 					<view class="box">
@@ -193,10 +193,11 @@
 </template>
 
 <script>
+	const app = getApp();
 	export default {
 		data(){
 			return {
-				imgUrl:this.$common.imgUrl	//图片前缀地址
+				imgUrl:app.globalData.imgUrl,	//图片前缀地址
 			}
 		},
 		onLoad(options) {

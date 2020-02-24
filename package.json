@@ -1,0 +1,26 @@
+{
+  "name": "uni-5idea",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "@dcloudio/uni-ui": "^1.1.8",
+    "echarts": "^4.6.0",
+    "mpvue-echarts": "^0.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canheyuan/uni-5idea.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/canheyuan/uni-5idea/issues"
+  },
+  "homepage": "https://github.com/canheyuan/uni-5idea#readme"
+}

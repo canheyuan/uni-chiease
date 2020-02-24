@@ -76,10 +76,15 @@
         "domain" : "https://test.5ideachinese.com/",
         "template" : "index.html",
         "devServer" : {
-            "https" : true
+            "https" : false
         },
         "router" : {
-            "base" : ""
+            "base" : "/profile/frontend_v2/"
+        },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
         }
     }
 }

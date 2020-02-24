@@ -82,8 +82,8 @@ export default {
 	shareDub:{
 		title:{zh:'配音课',en:'Dubbing'},
 		score_text01:{zh:'本段配音得分',en:'Score of this paragraph'},
-		score_text02:{zh:'超过了',en:'is better than'},
-		score_text03:{zh:'的用户',en:'learners'}
+		score_text02:{zh:'超过了',en:'is better than '},
+		score_text03:{zh:'的用户',en:' learners'}
 	},
 	//打卡分享页
 	sharePunch:{

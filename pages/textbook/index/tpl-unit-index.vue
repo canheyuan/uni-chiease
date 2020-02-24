@@ -6,28 +6,32 @@
 			<view class="h3">第<text class="num">1</text>单元</view>
 			<view class="p">Unit 1</view>
 		</view>
+		
 		<!-- 标题 -->
 		<view class="tb_title">
 			<view class="py">wèn hòu yǔ chēng hu</view>
 			<view class="zh">问候与称呼</view>
 			<view class="en">GREETING & ADDRESS</view>
 		</view>
+		
 		<!-- 内容 -->
 		<view class="tb_ctn">
 			<image class="ctn_img" mode="widthFix" :src="`${imgUrl}/temp/unit1_img01.png`"></image>
 		</view>
+		
 		<!-- 向下箭头提示 -->
-		<view class="arrow_btm">
+		<!-- <view class="arrow_btm">
 			<image class="ico" mode="widthFix" :src="`${imgUrl}/textbook/arrow_btm2.png`"></image>
-		</view>
+		</view> -->
 	</view>
 </template>
 
 <script>
+	const app = getApp();
 	export default {
 		data(){
 			return {
-				imgUrl:this.$common.imgUrl	//图片前缀地址
+				imgUrl:app.globalData.imgUrl,	//图片前缀地址
 			}
 		},
 		onLoad(options) {

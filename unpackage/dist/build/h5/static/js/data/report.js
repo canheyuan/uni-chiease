@@ -1,5 +1,5 @@
-{
-[
+
+var reportData = [
 	{
 		"level":"1",
 		"title":{
@@ -295,5 +295,5 @@
 		]
 	}
 ]
-}
+export default  reportData
 

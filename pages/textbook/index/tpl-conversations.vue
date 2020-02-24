@@ -126,10 +126,11 @@
 </style>
 
 <script>
+	const app = getApp();
 	export default {
 		data(){
 			return {
-				imgUrl:this.$common.imgUrl	//图片前缀地址
+				imgUrl:app.globalData.imgUrl,	//图片前缀地址
 			}
 		},
 		onLoad(options) {

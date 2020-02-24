@@ -1,21 +1,4 @@
-
 export default {
-	imgUrl	: '/static/images',		//图片地址前缀
-	apiUrl	: 'https://test.5ideachinese.com',	//接口地址前缀
-	pinyinUrl: 'https://test.5ideachinese.com/profile',	//拼音表地址前缀
-	isTest	: false,	//是否开启测试
-	source	: 'h5',		//来源
-	sid		: '',		//APP  	5idea-sid
-	lan		: 'en',		//APP	语言
-	header	: null,		//APP	头部信息
-	
-	//下载APP地址
-	dowmlaod:{
-		apple:"https://itunes.apple.com/cn/app/chiease/id1454486250?ls=1&mt=8",	//苹果
-		GP:"https://play.google.com/store/apps/details?id=com.fiveidea.chiease",	//谷歌
-		myapp:"https://sj.qq.com/myapp/detail.htm?apkName=com.fiveidea.chiease",	//应用宝
-	},
-	
 	//APP 获取头部信息
 	getHeader : (cbOk)=>{	
 		Shell.getHttpHeaders((res)=>{

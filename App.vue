@@ -1,5 +1,26 @@
 <script>
+	const langData = require('./static/js/data/lang.js').default
+	
 	export default {
+		globalData:{
+			imgUrl	: '/static/images',		//图片地址前缀
+			apiUrl	: 'https://test.5ideachinese.com',	//接口地址前缀
+			pinyinUrl: 'https://test.5ideachinese.com/profile',	//拼音表mp3地址前缀
+			isTest	: false,	//是否开启测试
+			source	: 'h5',		//来源
+			sid		: '',		//APP  	5idea-sid
+			lan		: 'en',		//APP	语言
+			header	: null,		//APP	头部信息
+			
+			langData: langData,	//多语言文件
+			//下载APP地址
+			dowmlaod:{
+				apple:"https://itunes.apple.com/cn/app/chiease/id1454486250?ls=1&mt=8",	//苹果
+				GP:"https://play.google.com/store/apps/details?id=com.fiveidea.chiease",	//谷歌
+				myapp:"https://sj.qq.com/myapp/detail.htm?apkName=com.fiveidea.chiease",	//应用宝
+			},
+		},
+		
 		onLaunch: function(options) {
 			//console.log('App Launch',options)
 			var _this = this;
@@ -15,6 +36,9 @@
 				Shell.getHttpHeaders((res)=>{
 					_this.$common.header = res
 				})
+			}else{
+				var lang = options.query.lang?options.query.lang:'en'
+				this.$common.lan = lang
 			}
 		},
 		onShow: function() {
@@ -22,7 +46,7 @@
 		},
 		onHide: function() {
 			console.log('App Hide')
-		}
+		},
 	}
 </script>
 
@@ -52,5 +76,7 @@
 	.fr { float: right; }
 	.indent2{text-indent:2em;}
 	/* html,body{max-width:750px; margin:0 auto;} */
-	.icons{background:url(/static/images/icons.png) no-repeat; background-size:500upx 500upx; display: inline-block; vertical-align: middle;}
+	.icons{background:url(~@/static/images/icons.png) no-repeat; background-size:500upx 500upx; display: inline-block; vertical-align: middle;}
+	.gray_bg{background:#f7f7f7;}
+	
 </style>

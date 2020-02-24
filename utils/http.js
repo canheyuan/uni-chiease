@@ -1,10 +1,12 @@
+
 //读取数据接口
 var http = (option,vue) => {
-	let apiUrl = vue.$common.apiUrl	//接口域名
-	let commonHeader = vue.$common.header	//app传来的头部信息
-	if(vue.$common.source == 'app' && !commonHeader){
-		vue.$common.getHeader((res)=>{
-			vue.$common.header = res
+	const app = getApp();
+	let apiUrl = app.globalData.apiUrl	//接口域名
+	let commonHeader = app.globalData.header	//app传来的头部信息
+	if(app.globalData.source == 'app' && !commonHeader){
+		app.globalData.getHeader((res)=>{
+			app.globalData.header = res
 		})
 	}else if(!commonHeader){
 		commonHeader = {}

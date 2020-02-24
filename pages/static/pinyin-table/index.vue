@@ -93,7 +93,7 @@
 </template>
 
 <script>
-	
+	const app = getApp()
 	//导入拼音表数据
 	const pyData = require('../../../static/js/data/pinyin.min.js').default
 	pyData.yunmuLen = pyData.yunmu.length*150
@@ -106,7 +106,6 @@
 					pyData.pinyin[smItem][ymItem] = ''
 				}
 			}
-			
 		})
 	})
 	console.log('pyData',pyData)
@@ -125,7 +124,7 @@
 		components: {uniPopup},
 		data() {
 			return {
-				imgUrl:this.$common.imgUrl,
+				imgUrl:app.globalData.imgUrl,	//图片前缀地址
 				pyData:pyData,	//拼音表数据
 				popList:[],		//弹窗某个拼音列表
 				pop2Title:'',	//弹窗2title

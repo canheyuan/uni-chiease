@@ -57,7 +57,7 @@
 	// 	.bg{float:left; width:62upx; height:72upx;}
 	// }
 	@import '@/static/css/textbook.scss';
-	.zs_mdl{padding:0 24upx;
+	.zs_mdl{padding:0 24upx 80upx;
 		.zs_tbl{
 			.zs_tit02 .en{float:none; overflow:hidden; display:block;}
 			.td{
@@ -77,10 +77,11 @@
 </style>
  
 <script>
+	const app = getApp();
 	export default {
 		data(){
 			return {
-				imgUrl:this.$common.imgUrl,	//图片前缀地址
+				imgUrl:app.globalData.imgUrl,	//图片前缀地址
 				wordList:[
 					{zh:'您',py:'nín',type:'代',en:'polite form of you (singular) '},
 					{zh:'好',py:'hǎo',type:'形',en:'good, well, fine'},

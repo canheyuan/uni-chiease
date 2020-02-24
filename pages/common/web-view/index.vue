@@ -18,8 +18,8 @@
         },
 		onLoad(options) {
 			console.log('spoken-onLoad-options:',options)
-			//this.webUrl = options.url?options.url:''
-			window.location.href = options.url?options.url:''
+			this.webUrl = options.url?options.url:''
+			//window.location.href = options.url?options.url:''
 		},
     }
 </script>
