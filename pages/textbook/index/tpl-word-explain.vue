@@ -3,8 +3,12 @@
 		<view class="zs_tit01">
 			<view class="num">1</view>
 			<view class="info">
-				<view class="py">wèn hòu</view>
-				<view class="zh">问候</view>
+				<ruby class="py_zh">
+					<rb>问</rb><rt>wèn</rt>
+					<rb>候</rb><rt>hòu</rt>
+				</ruby>
+				<!-- <view class="py">wèn hòu</view>
+				<view class="zh">问候</view> -->
 				<view class="en">GREETING</view>
 			</view>
 		</view>

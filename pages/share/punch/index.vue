@@ -1,476 +1,67 @@
 <template>
 	<view>
 		<!-- 底部下载提示 -->
-		<download-top></download-top>
+		<download-top :detailData="detailData" :lan="lan"></download-top>
 		
-		<!--口语课头部-->
-		<view class="spoken_head" v-if="detailData">
-			<view class="spoken_data">
-				<view class="title">
-					<view class="h3">{{detailData.chapterName['zh']}}</view>
-					<view class="p">{{detailData.chapterName['en']}}</view>
+		<!--打卡分享-->
+		<view class="punch_page" v-if="detailData">
+			<view class="punch_head">
+				<image class="img" :src="imgUrl+'/dk_top.png'" alt="">
+				<view class="txt" style="font-size:34upx; line-height:60upx; top:30upx;">
+					{{langData.sharePunch.headText01[lan]}}<br v-if="lan=='zh'">
+					{{langData.sharePunch.headText02[lan]}} {{detailData.lastPunchDay}} {{langData.sharePunch.headText03[lan]}}
 				</view>
-				<!--图表-->
-				<!-- 引入的mpvue-echarts组件 -->
-				<view class="spoken_charts" id="spoken_charts">
-					<mpvue-echarts canvasId="chat1" :echarts="echarts" :onInit="fn1OnInit"  />
-				</view>
-				<view class="shadow_bg"></view>
+				<view class="btn" @click="downloadFn" >{{langData.sharePunch.punchBtnText[lan]}}</view>
 			</view>
-			<view class="share_user">
-				<view class="per_img"><img :src="detailData.headImg" alt=""></view>
-				<navigator class="btn" url="../dub/index?source=app">
-					{{langData.shareData.challengeBtn[lan]}}
-				</navigator>
-				<view class="info">
-					<view class="h3">{{langData.shareSpoken.headTypeText[lan]}}</view>
-					<view class="p">
-						{{langData.shareSpoken.headGetText[lan]}}
-						<text class="yellow">10</text>
-					</view>
+		
+			<view class="punch_data">
+				<view class="li li_date clearfix">
+					<view class="em"><view class="icons"></view></view>
+					<text class="num">{{detailData.maxPunchDay}}</text>
+					<view class="p">{{langData.punchCard.punchMaxDay[lan]}}</view>
+				</view>
+				<view class="li li_score clearfix" >
+					<view class="em"><view class="icons"></view></view>
+					<text class="num">{{detailData.maxChallengeScore}}</text>
+					<view class="p">{{langData.punchCard.emigrateStroe[lan]}}</view>
+				</view>
+				<view class="li li_time clearfix">
+					<view class="em"><view class="icons"></view></view>
+					<text class="num">{{detailData.studyDuration}}</text>
+					<view class="p">{{langData.punchCard.learnTime[lan]}}</view>
 				</view>
 			</view>
 		</view>
 		
-		<!-- 录音列表 -->
-		<record-list :detailData="detailData"></record-list>
-		
 		<!-- 底部下载按钮 -->
-		<download-bottom></download-bottom>
+		<download-bottom :detailData="detailData" :lan="lan"></download-bottom>
 	</view>
 </template>
 
 <script>
 	const app = getApp();
-	import * as echarts from 'echarts'
-	import mpvueEcharts from 'mpvue-echarts'
-	//命名一个方法名称，方便自己识别，也方便多个图表引用时易区别。
-	//切记这方法不能写到export default中。
-	function fn1(canvas, detailData) {
-		
-			var shareSpokenData = this.langData.shareSpoken
-			var chartsHeight = 350/2;
-			var barWidth = 40*chartsHeight/350;
-			var barInterval =16*chartsHeight/350;
-			var color= ['#ff5555', '#35afff','#5fce51', '#ffc10a'];
-			const chart = echarts.init(canvas, null, {
-				width: 350,
-				height: chartsHeight
-			})
-			canvas.setChart(chart);
-			
-			var dataStyle = {
-				normal: {
-					label: {
-						show: false
-					},
-					labelLine: {
-						show: false
-					},
-					shadowBlur: 40,
-					borderWidth: 10,
-					shadowColor: 'rgba(0, 0, 0, 0)' //边框阴影
-				}
-			};
-			var placeHolderStyle = {
-				normal: {
-					color: 'rgba(255,255,255,.12)',
-					label: {
-						show: false
-					},
-					labelLine: {
-						show: false
-					}
-				},
-				emphasis: {
-					color: '#393d50'
-				}
-			};
-			var option = {
-				backgroundColor: 'transparent',
-				title: {
-					text: detailData.score,
-					left:'22%',
-					x: 'center',
-					y: 'center',
-					textStyle: {
-						fontWeight: 'bold',
-						fontSize: 40,
-						color: "#ffffff",
-					}
-				},
-				tooltip: {
-					trigger: 'item',
-					show: true,
-					formatter: "{b} : <br/>{d}%",
-					//backgroundColor: 'rgba(0,0,0,0.7)', // 背景
-					padding: [8, 10], //内边距
-					extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
-				},
-				legend: {
-					orient: 'vertical',
-					// icon: 'circle',
-					left: '75%',
-					top: '20',
-					itemWidth:35*chartsHeight/350,
-					itemHeight:35*chartsHeight/350,
-					itemGap:20,
-					 data: [shareSpokenData.accuracy[this.lan], shareSpokenData.fluency[this.lan], shareSpokenData.intact[this.lan],shareSpokenData.pronounce[this.lan]],
-					textStyle: {
-						color: '#ffffff'
-					}
-				},
-				series: [{
-						name: 'Line 1',
-						type: 'pie',
-						clockWise: true,
-						radius: [chartsHeight-barWidth, chartsHeight],
-						center:['32%','50%'],
-						itemStyle: dataStyle,
-						hoverAnimation: false,
-						startAngle: 90,
-						label:{
-							borderRadius:'10',
-						},
-						data: [
-							{
-								value: detailData.accuracyScore,
-								name: shareSpokenData.accuracy[this.lan],
-								itemStyle: {
-									normal: {
-										color: color[0]
-									}
-								}
-							},
-							{
-								value: 100-detailData.accuracyScore,
-								name: '',
-								tooltip: {
-									show: false
-								},
-								itemStyle: placeHolderStyle
-							}
-						]
-					},
-					{
-						name: 'Line 2',
-						type: 'pie',
-						clockWise: true,
-						radius: [chartsHeight-barWidth*2-barInterval, chartsHeight-barWidth-barInterval],
-						center:['32%','50%'],
-						itemStyle: dataStyle,
-						hoverAnimation: false,
-						startAngle: 90,
-						label:{
-							borderRadius:'10',
-						},
-						data: [{
-								value: detailData.fluencyScore,
-								name: shareSpokenData.fluency[this.lan],
-								itemStyle: {
-									normal: {
-										color:color[1]
-									}
-								}
-							},
-							{
-								value: 100-detailData.fluencyScore,
-								name: '',
-								tooltip: {
-									show: false
-								},
-								itemStyle: placeHolderStyle
-							},
-						]
-					},
-					{
-						name: 'Line 3',
-						type: 'pie',
-						clockWise: true,
-						radius: [chartsHeight-barWidth*3-barInterval*2, chartsHeight-barWidth*2-barInterval*2],
-						center:['32%','50%'],
-						itemStyle: dataStyle,
-						hoverAnimation: false,
-						startAngle: 90,
-						data: [{
-								value: detailData.integrityScore,
-								name: shareSpokenData.intact[this.lan],
-								itemStyle: {
-									normal: {
-										color: color[2]
-									}
-								}
-							},
-							{
-								value: 100-detailData.integrityScore,
-								name: '',
-								tooltip: {
-									show: false
-								},
-								itemStyle: placeHolderStyle
-							},
-						]
-					},
-					{
-						name: 'Line 4',
-						type: 'pie',
-						clockWise: true,
-						radius: [chartsHeight-barWidth*4-barInterval*3, chartsHeight-barWidth*3-barInterval*3],
-						center:['32%','50%'],
-						itemStyle: dataStyle,
-						hoverAnimation: false,
-						startAngle: 90,
-						data: [{
-								value: detailData.rhythmScore,
-								name: shareSpokenData.pronounce[this.lan],
-								itemStyle: {
-									normal: {
-										color: color[3]
-									}
-								}
-							},
-							{
-								value: 100-detailData.rhythmScore,
-								name: '',
-								tooltip: {
-									show: false
-								},
-								itemStyle: placeHolderStyle
-							},
-						]
-					}
-				]
-			};
-		
-			chart.setOption(option)
-		return chart
-	};
-	
-	function chartsFn(){
-				//var chartsHeight = $('#spoken_charts').height()/2;
-				var chartsHeight = this.$refs.spoken_charts.offsetHeight/2;
-				console.log(chartsHeight);
-				var barWidth = 40*chartsHeight/350;
-				var barInterval =16*chartsHeight/350;
-				var color= ['#ff5555', '#35afff','#5fce51', '#ffc10a'];
-				var dataStyle = {
-					normal: {
-						label: {
-							show: false
-						},
-						labelLine: {
-							show: false
-						},
-						shadowBlur: 40,
-						borderWidth: 10,
-						shadowColor: 'rgba(0, 0, 0, 0)' //边框阴影
-					}
-				};
-				var placeHolderStyle = {
-					normal: {
-						color: 'rgba(255,255,255,.12)',
-						label: {
-							show: false
-						},
-						labelLine: {
-							show: false
-						}
-					},
-					emphasis: {
-						color: '#393d50'
-					}
-				};
-				var option = {
-					backgroundColor: 'transparent',
-					title: {
-						text: this.checkShareData.score,
-						left:'22%',
-						x: 'center',
-						y: 'center',
-						textStyle: {
-							fontWeight: 'bold',
-							fontSize: 40,
-							color: "#ffffff",
-						}
-					},
-					tooltip: {
-						trigger: 'item',
-						show: true,
-						formatter: "{b} : <br/>{d}%",
-						//backgroundColor: 'rgba(0,0,0,0.7)', // 背景
-						padding: [8, 10], //内边距
-						extraCssText: 'box-shadow: 0 0 3px rgba(255, 255, 255, 0.4);', //添加阴影
-					},
-					legend: {
-						orient: 'vertical',
-						// icon: 'circle',
-						left: '75%',
-						top: '20',
-						itemWidth:35*chartsHeight/350,
-						itemHeight:35*chartsHeight/350,
-						itemGap:20,
-						data: ['正确率', '流畅度', '完整度','发音'],
-						textStyle: {
-							color: '#ffffff'
-						}
-					},
-					series: [{
-							name: 'Line 1',
-							type: 'pie',
-							clockWise: true,
-							radius: [chartsHeight-barWidth, chartsHeight],
-							center:['32%','50%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							startAngle: 90,
-							label:{
-								borderRadius:'10',
-							},
-							data: [
-								{
-									value: this.checkShareData.accuracyScore,
-									name: '正确率',
-									itemStyle: {
-										normal: {
-											color: color[0]
-										}
-									}
-								},
-								{
-									value: 100-this.checkShareData.accuracyScore,
-									name: '',
-									tooltip: {
-										show: false
-									},
-									itemStyle: placeHolderStyle
-								}
-							]
-						},
-						{
-							name: 'Line 2',
-							type: 'pie',
-							clockWise: true,
-							radius: [chartsHeight-barWidth*2-barInterval, chartsHeight-barWidth-barInterval],
-							center:['32%','50%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							startAngle: 90,
-							label:{
-								borderRadius:'10',
-							},
-							data: [{
-									value: this.checkShareData.fluencyScore,
-									name: '流畅度',
-									itemStyle: {
-										normal: {
-											color:color[1]
-										}
-									}
-								},
-								{
-									value: 100-this.checkShareData.fluencyScore,
-									name: '',
-									tooltip: {
-										show: false
-									},
-									itemStyle: placeHolderStyle
-								},
-							]
-						},
-						{
-							name: 'Line 3',
-							type: 'pie',
-							clockWise: true,
-							radius: [chartsHeight-barWidth*3-barInterval*2, chartsHeight-barWidth*2-barInterval*2],
-							center:['32%','50%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							startAngle: 90,
-							data: [{
-									value: this.checkShareData.integrityScore,
-									name: '完整度',
-									itemStyle: {
-										normal: {
-											color: color[2]
-										}
-									}
-								},
-								{
-									value: 100-this.checkShareData.integrityScore,
-									name: '',
-									tooltip: {
-										show: false
-									},
-									itemStyle: placeHolderStyle
-								},
-							]
-						},
-						{
-							name: 'Line 4',
-							type: 'pie',
-							clockWise: true,
-							radius: [chartsHeight-barWidth*4-barInterval*3, chartsHeight-barWidth*3-barInterval*3],
-							center:['32%','50%'],
-							itemStyle: dataStyle,
-							hoverAnimation: false,
-							startAngle: 90,
-							data: [{
-									value: this.checkShareData.rhythmScore,
-									name: '发音',
-									itemStyle: {
-										normal: {
-											color: color[3]
-										}
-									}
-								},
-								{
-									value: 100-this.checkShareData.rhythmScore,
-									name: '',
-									tooltip: {
-										show: false
-									},
-									itemStyle: placeHolderStyle
-								},
-							]
-						}
-					]
-				};
-	
-				var myChart = echarts.init(document.getElementById('spoken_charts'));
-				// 使用刚指定的配置项和数据显示图表。
-				myChart.setOption(option);
-			}
-
-	
-	import downloadTop from "../tpl/download-top.vue"
+	import downloadTop from "../tpl/download-top.vue"	//顶部下载按钮
 	import downloadBottom from "../tpl/download-bottom.vue"
-	import recordList from "../tpl/my-record-list.vue"
-	//创建音频实例
-	const audioObj = uni.createInnerAudioContext();
-	audioObj.autoplay = true;
+	
 	export default {
 		components:{
 			'download-top'		: downloadTop,
 			'download-bottom'	: downloadBottom,
-			'record-list'		: recordList,
-			mpvueEcharts
 		},
 		data() {
 			return {
 				imgUrl:app.globalData.imgUrl,
 				langData:app.globalData.langData,	//语言文件
 				lan:app.globalData.lan,	//当前语言
-				detailData:null,
-				shareId:'b5c31a79257ffb3ac2c3af79377932f6',	//分享id
-				
-				echarts,
-				//图表数据绑定（我们定义的两个方法绑定）
-				fn1OnInit: chartsFn,
+				dlUrl:app.globalData.dowmlaod,	//下载地址
+				detailData:null,	//分享接口详情信息
+				isIOS:this.$common.system()=='ios',	//是否IOS系统
+				shareId:'',	//打卡分享id
 			}
 		},
 		onLoad(options) {
 			app.globalData.source == options.source?options.source:'h5'
-			//this.shareId = options.shareid?options.shareid:''
+			this.shareId = options.shareid?options.shareid:''
 			this.getShareDetailFn(this.shareId);
 		},
 		
@@ -478,44 +69,96 @@
 			//获取分享详情信息
 			getShareDetailFn(shareId){
 				this.$http({
-					url:`/api/shareInfo/oralChaShareInfo/${shareId}`,
+					url:`/api/shareInfo/userPunchShareInfo/${shareId}`,
 					success:(res)=>{
 						var detailData =  res.data;
-						detailData.paraList.forEach(item=>{
-							item.isUserPlay = false;
-							item.isParaPlay = false;
-						});
+						this.lan = detailData.lan?detailData.lan:'en'
 						this.detailData = detailData
-						console.log('口语课分享详情：',detailData)
+						console.log('打卡分享详情：',detailData)
 					}
 				})
 			},
+			downloadFn(){
+				if(this.isIOS){
+					uni.navigateTo({ url: `/pages/common/web-view/index?url=${this.dlUrl.apple}` });
+				}else{
+					uni.pageScrollTo({		//uni-app中页面滚动接口
+						scrollTop:10000,//滚动到页面的目标位置（单位px）
+						duration:100  //滚动动画的时长，默认300ms，单位 ms
+					})
+				}
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
-/*口语课头部*/
-.spoken_head{margin-bottom:30upx;}
-.spoken_data{height:570upx; width:100%; text-align: center; position:relative; z-index:2; background:url(~@/static/images/temp/share_bg01.jpg) no-repeat center top; background-size:100% 100%;}
-.spoken_data .title{padding-top:40upx;}
-.spoken_data .title .h3{font-size:38upx; color:#fff; margin-bottom:20upx;}
-.spoken_data .title .p{font-size:30upx; color:#fff;}
-.spoken_data .shadow_bg{
-	height:24upx; width:100%;  position:absolute; bottom:-24upx; left:0;
-	background:-moz-linear-gradient(top,rgba(0,0,0,.3),rgba(0,0,0,0));/*火狐*/
-	background: -webkit-linear-gradient(top,rgba(0,0,0,.3), rgba(0,0,0,0));   /*Safari5.1 Chrome 10+*/
+.punch_head{
+	position:relative;width:100%;
+	.img{width:100%;}
+	.tip{
+		line-height:36upx; background:#ffa800; font-size:28upx; color:#fff; padding:15upx 20upx; 
+		position:absolute; left:0; top:0; z-index:9; width:100%; display:none;
+	}
+	.txt{
+		position:absolute; left:0; top:60upx; font-size:56upx; color:#fff; width:100%; text-align: center; 
+		line-height:80upx; letter-spacing:6upx;text-shadow:4upx 4upx 4upx #3e79ff; 
+		.span{color:#ffc10a; font-size:72upx; line-height:80upx;letter-spacing:0; vertical-align: top; margin-right:10upx;}
+	}
+	.btn{
+		width:80%;height:100upx; line-height:100upx; text-align: center; display:block; margin:-60upx auto 20upx; background:#fff; 
+		border-radius:50upx; font-size:34upx; color:#1788d2;box-shadow: 8upx 0 60upx rgba(23,136,210,.26); position:relative; z-index:9;
+	}
+	.xxjh_btn{font-size:30upx; color:#777777; display:block; margin:0 auto; text-align: center; line-height:30upx; padding:20upx 0;}
+	.xxjh_btn .ico_tri{width:30upx; height:30upx; background-position: 0 -60upx; margin-left:10upx; vertical-align: top;}
 }
-.spoken_charts{width:550upx; height:350upx; margin:30upx auto 0;}
-.share_user{width:700upx; margin:0 auto; background:#35afff; border-bottom-left-radius: 30upx; border-bottom-right-radius: 30upx; padding:30upx; height:160upx; box-shadow:6upx 0 20upx rgba(53,175,255,.4);}
-.share_user .per_img{float:left; width:100upx; height:100upx; border:4upx solid #9ad7ff; border-radius:100%; overflow: hidden; margin-right:20upx;}
-.share_user .per_img img{width:100%; height:100%; border-radius:100%;}
-.share_user .btn{display:inline-block; width:160upx; height:64upx; line-height:58upx; text-align: center; border:2upx solid #fff; border-radius:32upx; color:#fff; font-size:28upx; float:right; margin-top:15upx; margin-left:20upx;}
-.share_user .info{overflow:hidden; padding-top:5upx;}
-.share_user .info .h3{font-size:34upx; color:#fff; margin-bottom:15upx;}
-.share_user .info .p{font-size:28upx; color:#c1e6ff; line-height:30upx;}
-.share_user .info .p .yellow{color:#fdcf00;}
-.share_user .info .p .ico_money{background-position: -100upx -60upx; width:30upx; height:30upx; vertical-align: top;}
 
+.punch_data{
+	padding:30upx 0;
+	.li{
+		height:120upx; padding:15upx 30upx;
+		.em{
+			display:inline-block; width:90upx; height:90upx; background:#ffc10a; border-radius:100%; 
+			padding:20upx; float:left; margin-right:20upx; 
+			.icons{width:50upx; height:50upx;}
+		}
+		.num{float:right; font-size:72upx; font-family: Arail; font-weight: bold; color:#ffc10a; line-height:90upx;}
+		.p{line-height:90upx; font-size:34upx; color:#242629;}
+	}
+	.li_date{
+		.em{
+			box-shadow: 6upx 0 24upx rgba(247,157,0,.5); background:#ffc10a;
+			.icons{background-position: 0 0;}
+		}
+		.num{color:#ffc10a;}
+	}
+	.li_score{
+		.em{
+			box-shadow: 6upx 0 24upx rgba(110,219,27,.5); background:#6edb1b;
+			.icons{background-position: -50upx 0;}
+		}
+		.num{color:#6edb1b;}
+	}
+	.li_time{
+		.em{
+			box-shadow: 6upx 0 24upx rgba(75,183,245,.5); background:#4bb7f5;
+			.icons{background-position: -100upx 0;}
+		}
+		.num{color:#4bb7f5;}
+	}
+}
 
+.share_btn_box{
+	text-align: center; margin-top:40upx;
+}
+.share_btn_box a{display:inline-block; width:140upx; height:140upx; background:#ffc10a; color:#fff; border-radius:100%; padding:20upx 0; box-shadow: 8upx 0 28upx rgba(233,140,0,.55); transition:all .3s; }
+.share_btn_box a .ico_share{width:60upx; height:60upx; background-position: 0 -100upx; margin-bottom:10upx; }
+.share_btn_box a span{display:block; font-size:26upx;}
+.share_btn_box a:active{transform:scale(.9,.9);}
+/*未能打卡*/
+.un_punch .punch_head .img{-webkit-filter: grayscale(100%); -moz-filter: grayscale(100%); filter: grayscale(100%);}
+.un_punch .punch_head .tip{display:block;}
+.un_punch .punch_head .btn{color:#bebebe;}
+.un_punch .share_btn_box a{background:#e3e3e3; box-shadow: none;}
+.un_punch .share_btn_box a:active{transform:scale(1,1);}
 </style>

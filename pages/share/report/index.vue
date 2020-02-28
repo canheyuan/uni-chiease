@@ -1,7 +1,7 @@
 <template>
 	<view class="gray_bg">
 		<!-- 底部下载提示 -->
-		<download-top></download-top>
+		<download-top :detailData="detailData" :lan="lan"></download-top>
 		
 		<!--测试报告头部-->
 		<div class="report_head" v-if="detailData">
@@ -56,7 +56,7 @@
 		</div>
 		
 		<!-- 底部下载按钮 -->
-		<download-bottom></download-bottom>
+		<download-bottom :detailData="detailData" :lan="lan"></download-bottom>
 	</view>
 </template>
 
@@ -84,7 +84,7 @@
 				isIOS:this.$common.system()=='ios',	//是否IOS系统
 				reportData:null,
 				detailData:null,
-				shareId:'4dccdf22cfdbef27fb500ef3e9de2e1f',	//分享id
+				shareId:'',	//分享id
 				ArcbarChart: {
 					dataAs:{
 						series: [{
@@ -107,7 +107,7 @@
 		},
 		onLoad(options) {
 			app.globalData.source == options.source?options.source:'h5'
-			//this.shareId = options.shareid?options.shareid:''
+			this.shareId = options.shareid?options.shareid:''
 			this.getShareDetailFn(this.shareId);
 		},
 		
@@ -119,6 +119,7 @@
 					success:(res)=>{
 						console.log('测试报告分享详情：',res.data,reportData)
 						var detailData =  res.data;
+						this.lan = detailData.lan?detailData.lan:'en'
 						this.detailData = detailData
 						this.reportData = reportData[detailData.level-1]
 						this.ArcbarChart.dataAs.series[0].data = (detailData.level/6).toFixed(2)

@@ -41,17 +41,13 @@
 			return {
 				imgUrl:app.globalData.imgUrl,	//图片前缀地址
 				dlUrl:app.globalData.dowmlaod,	//下载地址
-				imgUrl:app.globalData.imgUrl,
 				langData:app.globalData.langData,	//语言文件
-				lan:app.globalData.lan,	//当前语言
+				//lan:app.globalData.lan,	//当前语言
 			}
 		},
 		props:{
-			detailData:{
-				type: Object,
-				default: function () {
-				}
-			}
+			detailData:{ type: Object },
+			lan:{type: String}
 		},
 		mounted() {
 			audioObj.onEnded(()=>{

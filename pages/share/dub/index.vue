@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 顶部下载提示 -->
-		<download-top></download-top>
+		<download-top :detailData="detailData" :lan="lan"></download-top>
 		
 		<!--配音课头部-->
 		<view class="dub_head" v-if="detailData">
@@ -26,7 +26,7 @@
 						{{langData.shareDub.score_text03[lan]}}
 					</view>
 					<view class="score_num">{{detailData.score}}</view>
-					<view class="btn" :href="isIOS?dowmlaodUrl.downloadAppleUrl:'#download_mdl'">
+					<view class="btn" @click="downloadFn">
 						{{langData.shareData.challengeBtn[lan]}}
 					</view>
 				</view>
@@ -53,11 +53,11 @@
 			</view>
 		</view>
 		
-		<!-- 录音列表 -->
-		<record-list :detailData="detailData"></record-list>
+		<!-- 表现最佳的句子录音列表 -->
+		<record-list v-if="detailData && detailData.paraList" :detailData="detailData" :lan="lan"></record-list>
 	
 		<!-- 底部下载按钮 -->
-		<download-bottom></download-bottom>
+		<download-bottom :detailData="detailData" :lan="lan"></download-bottom>
 	</view>
 </template>
 
@@ -81,17 +81,17 @@
 				imgUrl:app.globalData.imgUrl,
 				langData:app.globalData.langData,	//语言文件
 				lan:app.globalData.lan,	//当前语言
-				dowmlaodUrl:app.globalData.dowmlaod,	//下载地址
+				dlUrl:app.globalData.dowmlaod,	//下载地址
 				detailData:null,	//分享接口详情信息
 				isIOS:this.$common.system()=='ios',	//是否IOS系统
-				shareId:'6e016f3f111c352a85ecd069e360534a',	//分享id
+				shareId:'',	//分享id
 				scoreWidth:0,	//分数宽度
 				isVideoPlay:false,	//视频是否播放中
 			}
 		},
 		onLoad(options) {
 			app.globalData.source == options.source?options.source:'h5'
-			//this.shareId = options.shareid?options.shareid:''
+			this.shareId = options.shareid?options.shareid:''
 			this.getShareDetailFn(this.shareId);
 		},
 		onShow(options){
@@ -107,10 +107,13 @@
 					url:`/api/shareInfo/dubChaShareInfo/${shareId}`,
 					success:(res)=>{
 						var detailData =  res.data;
-						detailData.paraList.forEach(item=>{
-							item.isUserPlay = false;
-							item.isParaPlay = false;
-						});
+						this.lan = detailData.lan?detailData.lan:'en'
+						if(detailData.paraList){
+							detailData.paraList.forEach(item=>{
+								item.isUserPlay = false;
+								item.isParaPlay = false;
+							});
+						}
 						this.detailData = detailData
 						videoAudio.src = detailData.userAudio
 						setTimeout(()=>{
@@ -119,6 +122,18 @@
 						console.log('配音课分享详情：',res.data)
 					}
 				})
+			},
+			
+			//下载跳转
+			downloadFn(){
+				if(this.isIOS){
+					uni.navigateTo({ url: `/pages/common/web-view/index?url=${this.dlUrl.apple}` });
+				}else{
+					uni.pageScrollTo({		//uni-app中页面滚动接口
+						scrollTop:10000,//滚动到页面的目标位置（单位px）
+						duration:100  //滚动动画的时长，默认300ms，单位 ms
+					})
+				}
 			},
 			
 			//获取元素宽度

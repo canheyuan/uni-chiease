@@ -237,7 +237,7 @@
 				.add{font-size:44upx; color:#242629; font-weight:bold; line-height:48upx; margin:0 20upx;}
 				.box{
 					background:#F9F9F9; border-left:2upx dashed #DCDCDC;  border-right:2upx dashed #DCDCDC; padding:8upx; min-width:66upx; display:inline-block;
-					.text2{font-size:32upx; color:#242629; display:block; line-height:72upx;}
+					.text2{ font-size:32upx; color:#242629; display:block; line-height:72upx; }
 				}
 			}
 		}

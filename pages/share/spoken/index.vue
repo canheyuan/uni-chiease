@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- 底部下载提示 -->
-		<download-top></download-top>
+		<download-top :detailData="detailData" :lan="lan"></download-top>
 		
 		<!--口语课头部-->
 		<view class="spoken_head" v-if="detailData">
@@ -32,11 +32,11 @@
 			</view>
 		</view>
 		
-		<!-- 录音列表 -->
-		<record-list :detailData="detailData"></record-list>
+		<!-- 表现最佳的句子录音列表 -->
+		<record-list v-if="detailData && detailData.paraList" :detailData="detailData" :lan="lan"></record-list>
 		
 		<!-- 底部下载按钮 -->
-		<download-bottom></download-bottom>
+		<download-bottom :detailData="detailData" :lan="lan"></download-bottom>
 	</view>
 </template>
 
@@ -461,7 +461,7 @@
 				langData:app.globalData.langData,	//语言文件
 				lan:app.globalData.lan,	//当前语言
 				detailData:null,
-				shareId:'b5c31a79257ffb3ac2c3af79377932f6',	//分享id
+				shareId:'',	//分享id
 				
 				echarts,
 				//图表数据绑定（我们定义的两个方法绑定）
@@ -470,7 +470,7 @@
 		},
 		onLoad(options) {
 			app.globalData.source == options.source?options.source:'h5'
-			//this.shareId = options.shareid?options.shareid:''
+			this.shareId = options.shareid?options.shareid:''
 			this.getShareDetailFn(this.shareId);
 		},
 		
@@ -481,10 +481,13 @@
 					url:`/api/shareInfo/oralChaShareInfo/${shareId}`,
 					success:(res)=>{
 						var detailData =  res.data;
-						detailData.paraList.forEach(item=>{
-							item.isUserPlay = false;
-							item.isParaPlay = false;
-						});
+						this.lan = detailData.lan?detailData.lan:'en'
+						if(detailData.paraList){
+							detailData.paraList.forEach(item=>{
+								item.isUserPlay = false;
+								item.isParaPlay = false;
+							});
+						}
 						this.detailData = detailData
 						console.log('口语课分享详情：',detailData)
 					}

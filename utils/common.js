@@ -38,5 +38,5 @@ export default {
 			result = 'pc'
 		}
 		return result;
-	},
+	}
 }

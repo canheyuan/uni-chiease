@@ -1,10 +1,10 @@
 <template>
 	<!--下载-->
-	<view class="download_mdl" id="download_mdl">
+	<view class="download_mdl"  v-if="detailData">
 		<view class="down_head">
 			<view class="title">
 				<view class="h3">CHIease</view>
-				<view class="p">Authentic and practical, speak Chinese at any time!</view>
+				<view class="p">{{detailData.shareDesc}}</view>
 			</view>
 			<image class="head_img" mode="widthFix" :src="`${imgUrl}/share_img01.jpg`" alt="">
 			<image class="down_tit" mode="widthFix" :src="`${imgUrl}/down_head.png`" alt="" >
@@ -42,6 +42,12 @@
 				systemLan:this.$common.getSystemLang(),	//获取手机语言
 			}
 		},
+		
+		props:{
+			detailData:{ type: Object },
+			lan:{type: String}
+		},
+		
 		methods: {
 			
 		}
