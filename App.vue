@@ -28,23 +28,38 @@
 			
 			//获取设置来源
 			var source = options.query.source?options.query.source:'h5'
-			this.$common.source = source
+			this.globalData.source = source
 			//this.$common.system = this.$common.
+			
+			var isTest = options.query.test?true:false
+			if(isTest){
+				this.globalData.isTest = isTest
+				this.globalData.sid = '052bcfcd2f02226320c564311f6340c1'
+				this.globalData.lan = 'zh'
+				this.globalData.header = {
+					'5idea-sid':'052bcfcd2f02226320c564311f6340c1',
+					lan:'zh'
+				}
+				return;
+			}
+			
 			
 			//APP访问需要先获取header信息
 			if(source == 'app'){
 				Shell.init();
 				Shell.getHttpHeaders((res)=>{
-					_this.$common.header = res
+					_this.globalData.header = res
 				})
 			}else{
 				var lang = options.query.lang?options.query.lang:'en'
-				this.$common.lan = lang
+				this.globalData.lan = lang
 			}
 		},
+		
 		onShow: function() {
 			console.log('App Show')
 		},
+		
 		onHide: function() {
 			console.log('App Hide')
 		},

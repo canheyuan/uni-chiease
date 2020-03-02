@@ -16,6 +16,10 @@
 					{title:'定制课分享页',url:'../share/custom/index?shareid=f4969e05ccb9ba18daf7503eed06846d'},
 					{title:'拼音表',url:'../static/pinyin-table/index'},
 					{title:'教材有声读物',url:'../textbook/index/index'},
+					{title:'每日打卡',url:'../punch/index/index'},
+					{title:'打卡提示',url:'../punch/tip/index'},
+					{title:'打卡目标',url:'../punch/target/index'},
+					{title:'打卡指引',url:'../punch/guide/index'},
 				]
 			}
 		},

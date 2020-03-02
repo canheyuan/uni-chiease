@@ -58,7 +58,7 @@
 				dlUrl:app.globalData.dowmlaod,	//下载地址
 				detailData:null,	//分享接口详情信息
 				isIOS:this.$common.system()=='ios',	//是否IOS系统
-				shareId:'f4969e05ccb9ba18daf7503eed06846d',	//分享id
+				shareId:'',	//分享id
 			}
 		},
 		onLoad(options) {
