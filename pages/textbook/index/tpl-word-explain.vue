@@ -60,7 +60,7 @@
 	// 	.en{background:#69A1E6; padding-right:30upx;}
 	// 	.bg{float:left; width:62upx; height:72upx;}
 	// }
-	@import '@/static/css/textbook.scss';
+	@import 'textbook.scss';
 	.zs_mdl{padding:0 24upx 80upx;
 		.zs_tbl{
 			.zs_tit02 .en{float:none; overflow:hidden; display:block;}

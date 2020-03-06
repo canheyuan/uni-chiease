@@ -119,7 +119,7 @@
 </template>
 
 <style lang="scss">
-	@import '@/static/css/textbook.scss';
+	@import 'textbook.scss';
 	
 	.situation_mdl{
 		padding:100upx 26upx 50upx;

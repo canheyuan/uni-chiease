@@ -38,5 +38,45 @@ export default {
 			result = 'pc'
 		}
 		return result;
+	},
+	
+	//判断是否是测试(opt参数:test:true或false,source:app或h5,lan:语言)
+	pageLoadFn(option,cbOk){
+		const app = getApp();
+		let opt = option ? option : null;
+		let opt_default = {
+			test:'',
+			source:'h5',
+			lan:'en'
+		};
+		opt = opt ? Object.assign(opt_default, opt) : opt_default
+
+		app.globalData.source = opt.source	//来源
+		app.globalData.isTest = opt.test?true:false
+		if(opt.test){
+			Shell.init();
+			app.globalData.isTest = true
+			app.globalData.sid = '052bcfcd2f02226320c564311f6340c1'
+			app.globalData.lan = 'zh'
+			app.globalData.header = {
+				'5idea-sid':'052bcfcd2f02226320c564311f6340c1',
+				'lan':'zh'
+			}
+			cbOk && cbOk()
+			return
+		}
+		
+		//APP访问需要先获取header信息
+		if(opt.source == 'app'){
+			Shell.init();
+			Shell.getHttpHeaders((res)=>{
+				app.globalData.sid = res['5idea-sid']
+				app.globalData.lan = res['lan']
+				app.globalData.header = res
+			})
+		}else{	//h5
+			app.globalData.lan = 'en'	//语言
+		}
+		cbOk && cbOk()
 	}
 }

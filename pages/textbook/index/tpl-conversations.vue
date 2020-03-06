@@ -91,7 +91,7 @@
 </template>
 
 <style lang="scss" scoped>
-	@import '@/static/css/textbook.scss';
+	@import 'textbook.scss';
 	
 	.conversations_page{padding:40upx 24upx;}
 	.conversations_ctn{

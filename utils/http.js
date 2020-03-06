@@ -1,16 +1,17 @@
 
 //读取数据接口
-var http = (option,vue) => {
+var http = (option) => {
 	const app = getApp();
 	let apiUrl = app.globalData.apiUrl	//接口域名
 	let commonHeader = app.globalData.header	//app传来的头部信息
-	if(app.globalData.source == 'app' && !commonHeader){
-		app.globalData.getHeader((res)=>{
-			app.globalData.header = res
-		})
-	}else if(!commonHeader){
-		commonHeader = {}
-	}
+	//console.log('commonHeader',app.globalData)
+	// if(app.globalData.source == 'app' && !commonHeader){
+	// 	app.globalData.getHeader((res)=>{
+	// 		app.globalData.header = res
+	// 	})
+	// }else if(!commonHeader){
+	// 	commonHeader = {}
+	// }
 	let opt = option ? option : null;
 	//console.log('headerDataheaderData',headerData)
 	let opt_default = {
@@ -20,7 +21,7 @@ var http = (option,vue) => {
 		isApiUrl:true,	//是否使用接口前缀
 		url: '', //前缀不用写
 		method: 'GET',  //接口类型,必须大写(GET、POST、PUT、DELETE、CONNECT、HEAD、OPTIONS、TRACE)
-		headerType:'application/json',	//application/x-www-form-urlencoded
+		headerType:'application/json',	//headerType:'application/x-www-form-urlencoded'
 		header: {},	
 		data: {}, //data参数
 		dataType: 'json',   //数据返回类型
@@ -34,6 +35,7 @@ var http = (option,vue) => {
 	opt.header = Object.assign(commonHeader, opt.header)
 	opt.header['content-type'] = opt.headerType
 	
+	
 	//var headerData = vue.$store.state.headerData
 	//headerData = headerData ? Object.assign(opt.headerData, headerData) : opt.headerData; //合并header参数
 	//alert('加载axios'+JSON.stringify(headerData))
@@ -42,6 +44,9 @@ var http = (option,vue) => {
 		url: (opt.isApiUrl?apiUrl:'') + opt.url, //仅为示例，并非真实接口地址。
 		data:opt.data,
 		header: opt.headerData,
+		method: opt.method,
+		dataType: opt.dataType,
+		responseType :opt.responseType,
 		success: (res) => {
 			if(res.data.code == 0){
 				opt.success && opt.success(res.data)

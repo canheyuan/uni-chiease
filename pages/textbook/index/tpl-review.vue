@@ -101,7 +101,7 @@
 </template>
 
 <style lang="scss">
-	@import '@/static/css/textbook.scss';
+	@import 'textbook.scss';
 	.review_mdl{
 		padding:100upx 26upx;
 		.zs_tit02{

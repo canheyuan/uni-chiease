@@ -819,3 +819,4 @@ var subjectListData = {
 subjectListData.data.sort(function () {
 	return Math.pow(-1, parseInt(Math.random() * 3))
 })
+export default subjectListData

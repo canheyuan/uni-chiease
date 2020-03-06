@@ -11,9 +11,9 @@
 					@click="punchCardFn(detailData)"
 				>{{detailData.punchBtnTxt}}</view>
 				
-				<view class="xxjh_btn">{{langData.punchCard.btnLearnPlan[lan]}}
+				<navigator class="xxjh_btn" url="../target/index">{{langData.punchCard.btnLearnPlan[lan]}}
 					<view class="icons ico_tri"></view>
-				</view>
+				</navigator>
 
 			</view>
 	
@@ -40,32 +40,25 @@
 			</div>
 		-->
 		</view>
+		
 		<!--打卡成功弹窗-->
-		<view class="mask_bg pop_show" v-show="punchCardPop" id="punch_pop">
-			<view class="mask_bg_ctn">
-	
-				<view class="punch_pop animated5 bounceIn">
-					<span class="icons ico_close close_btn"></span>
-					<h3>{{langData.punchCard.punchSuccessTxt[lan]}}</h3>
-					<img class="img" src="static/images/dkcg_img.png" alt="">
-					<p>{{langData.punchCard.popText01[lan]}}<span>0</span> {{langData.punchCard.dayText[lan]}}</p>
-					<a 
-					   class="yellow_btn close_btn" href="javascript:;"
-					   @click="closePunchCardPopFn"
-					>{{langData.punchCard.popBtn[lan]}}</a>
-				</view>
-	
+		<uni-popup ref="punchCardPop" type="center">
+			<view class="punch_pop">
+				<image mode="widthFix" class="img" :src="imgUrl+'/dkcg_img.png'" alt="">
+				<view @click="closePopupFn" class="icons ico_close close_btn"></view>
+				<view class="h3">{{langData.punchCard.punchSuccessTxt[lan]}}</view>
+				<view class="p">{{langData.punchCard.popText01[lan]}}<text class="span">0</text> {{langData.punchCard.dayText[lan]}}</view>
+				<view class="yellow_btn close_btn" @click="closePopupFn">{{langData.punchCard.popBtn[lan]}}</view>
 			</view>
-		</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
 	const app = getApp()
-
+	import {uniPopup} from '@dcloudio/uni-ui'	//导入uni-ui
 	export default {
-		components:{
-		},
+		components: {uniPopup},
 		data() {
 			return {
 				imgUrl:app.globalData.imgUrl,
@@ -77,13 +70,61 @@
 			}
 		},
 		onLoad(options) {
-			app.globalData.source == options.source?options.source:'h5'
-			this.getDetailFn(this.shareId);
+			//获取地址栏参数，并设置给globalData
+			if(!app.globalData.isFirst){	//首次App.vue有加载就不需要再加载
+				this.$common.pageLoadFn({
+					test:options.query,
+					lan :options.query.lan,
+					source:options.query.source
+				})
+				this.getDetailFn();
+			}else{
+				app.globalData.isFirst = false
+			}
+			
 		},
-		
+		onReady(){
+			//设置页面标题栏
+			var lan = this.lan
+			var param = {
+				name: "punch-card",
+				title: this.langData.punchCard.title[lan],
+				leftIcon: "back",		//or "close" ，缺省即back
+				rightText: this.langData.punchCard.headRightTxt[lan],		//不设此项则不显示右侧文字按钮
+				rightTextColor: "#777777",
+				rightTextIcon: "question",	//or "book"
+				backgroundColor: "#ffffff"	//不设则默认白色
+			}
+			uni.setNavigationBarTitle({  title: this.langData.punchCard.title[lan] });
+			console.log('Shell',Shell)
+			Shell.setPageTitle(JSON.stringify(param));	
+		},
 		methods: {
+			
+			//打卡操作
+			punchCardFn(detailData){
+				if(detailData.status == 0 && detailData.studiedTime > detailData.targetTime){
+					this.$http({
+						url:`/api/userPunch/punchCard`,
+						method:'POST',
+						success:(res)=>{
+							this.openPopupFn()
+						}
+					})
+				}
+			},
+			
+			//打开弹窗
+			openPopupFn(){
+				this.$refs.punchCardPop.open()
+			},
+			
+			closePopupFn(){
+				this.$refs.punchCardPop.close()
+			},
+			
 			//获取详情信息
-			getDetailFn(shareId){
+			getDetailFn(){
 				var _this = this
 				this.$http({
 					url:`/api/userPunch/detail`,
@@ -114,11 +155,14 @@
 					},
 					successOther:(res)=>{
 						if(res.code!=0){
-							console.log('暂未找到该分享页面：',res)		
+							console.log('数据加载失败：',res)		
 						}
 					}
 				})
 			},
+			
+			
+		
 		}
 	}
 </script>
@@ -180,11 +224,11 @@
 .un_punch .share_btn_box a{background:#e3e3e3; box-shadow: none;}
 .un_punch .share_btn_box a:active{transform:scale(1,1);}
 /*打卡成功弹窗*/
-.punch_pop{position:relative; margin-bottom:300upx; text-align: center; }
+.punch_pop{position:relative; width:750upx; text-align: center; margin-bottom:200upx;}
 .punch_pop .img{width:100%;}
-.punch_pop h3{color:#000; font-size:44upx; position:absolute; left:0; top:540upx; width:100%; font-weight: bold;}
-.punch_pop p{color:#777777; font-size:32upx; position:absolute; left:0; top:650upx; width:100%;}
-.punch_pop p span{color:#e98c00;}
-.punch_pop .yellow_btn{position:absolute; top:730upx; left:50%; margin-left:-220upx; width:440upx;}
+.punch_pop .h3{color:#000; font-size:44upx; position:absolute; left:0; top:540upx; width:100%; font-weight: bold;}
+.punch_pop .p{color:#777777; font-size:32upx; position:absolute; left:0; top:620upx; width:100%;}
+.punch_pop .p .span{color:#e98c00;}
+.punch_pop .yellow_btn{position:absolute; top:700upx; left:50%; margin-left:-220upx; width:440upx;}
 .punch_pop .ico_close{width:70upx; height:70upx; background-position: 0 -170upx; position:absolute; top:70upx;right:70upx;}
 </style>

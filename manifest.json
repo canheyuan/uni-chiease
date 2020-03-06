@@ -80,8 +80,8 @@
 			"disableHostCheck" : true,
 			"proxy" : {
 				"/" : {
-					//"target" : "https://res.5ideachinese.com", //正式机目标接口域名
-					"target" : "https://test.5ideachinese.com", //测试机目标接口域名
+					"target" : "https://res.5ideachinese.com", //正式机目标接口域名
+					//"target" : "https://test.5ideachinese.com", //测试机目标接口域名
 					"changeOrigin" : true,  //是否跨域
 					"ws":false,
 					"secure" : true  // 设置支持https协议的代理

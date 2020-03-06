@@ -210,7 +210,7 @@
 </script>
 
 <style lang="scss">
-	@import '@/static/css/textbook.scss';
+	@import 'textbook.scss';
 	.supplement_mdl{
 		padding:100upx 0 40upx 26upx;
 		.zs_tit02{

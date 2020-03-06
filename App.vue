@@ -7,11 +7,22 @@
 			//apiUrl	: 'https://test.5ideachinese.com',	//接口地址前缀
 			apiUrl	: '',	//接口地址前缀
 			pinyinUrl: 'https://test.5ideachinese.com/profile',	//拼音表mp3地址前缀
+			isFirst : true,	//是否第一次加载（第一次加载的页面不需要调用pageLoadFn函数）
 			isTest	: false,	//是否开启测试
 			source	: 'h5',		//来源
 			sid		: '',		//APP  	5idea-sid
 			lan		: 'zh',		//APP	语言
 			header	: null,		//APP	头部信息
+			// headerData: {   //app加载的头部信息
+			// 	'5idea-sid': 'aab99cac85776427bcb467990a75f149', //用户请求sid
+			// 	'5idea-sid': '', //用户请求sid
+			// 	'accept-language': '',   //设备语言
+			// 	'app-type': '',    //app类型 e.g. IOS, ANDROID
+			// 	'app-version': '', //app版本
+			// 	'device-type': '', //设备型号
+			// 	'device-id': '', //设备id
+			// 	'lan': '', //语言
+			// },
 			
 			langData: langData,	//多语言文件
 			//下载APP地址
@@ -24,36 +35,11 @@
 		
 		onLaunch: function(options) {
 			//console.log('App Launch',options)
-			var _this = this;
-			
-			//获取设置来源
-			var source = options.query.source?options.query.source:'h5'
-			this.globalData.source = source
-			//this.$common.system = this.$common.
-			
-			var isTest = options.query.test?true:false
-			if(isTest){
-				this.globalData.isTest = isTest
-				this.globalData.sid = '052bcfcd2f02226320c564311f6340c1'
-				this.globalData.lan = 'zh'
-				this.globalData.header = {
-					'5idea-sid':'052bcfcd2f02226320c564311f6340c1',
-					lan:'zh'
-				}
-				return;
-			}
-			
-			
-			//APP访问需要先获取header信息
-			if(source == 'app'){
-				Shell.init();
-				Shell.getHttpHeaders((res)=>{
-					_this.globalData.header = res
-				})
-			}else{
-				var lang = options.query.lang?options.query.lang:'en'
-				this.globalData.lan = lang
-			}
+			this.$common.pageLoadFn({
+				test:options.query,
+				lan :options.query.lan,
+				source:options.query.source
+			})
 		},
 		
 		onShow: function() {
@@ -93,6 +79,9 @@
 	.indent2{text-indent:2em;}
 	/* html,body{max-width:750px; margin:0 auto;} */
 	.icons{background:url(~@/static/images/icons.png) no-repeat; background-size:500upx 500upx; display: inline-block; vertical-align: middle;}
-	.gray_bg{background:#f7f7f7;}
+	.gray_bg{min-height:100%; background:#f7f7f7;}
 	
+	/*通用按钮*/
+	.yellow_btn{height:100upx; line-height:100upx; display:block; border-radius:50upx; color:#fff; background:#ffbc08; margin:0 80upx; box-shadow: 8upx 0 28upx rgba(247,157,0,.5); font-size:34upx;  background:-moz-linear-gradient(left,#ffc10a,#ffa100); background:-webkit-gradient(linear, 0% 0%,100% 0%,from(#ffc10a), to(#ffa100));/*谷歌*/}
+	.yellow_btn:active{ background:-moz-linear-gradient(left,#ffa100,#ffc10a); background:-webkit-gradient(linear, 0% 0%,100% 0%,from(#ffa100), to(#ffc10a));/*谷歌*/}
 </style>
