@@ -34,6 +34,9 @@
 		<!-- 表现最佳的句子录音列表 -->
 		<record-list v-if="detailData && detailData.paraList" :detailData="detailData" :lan="lan"></record-list>
 		
+		
+		
+		
 		<!-- 底部下载按钮 -->
 		<download-bottom :detailData="detailData"  :lan="lan"></download-bottom>
 	</view>

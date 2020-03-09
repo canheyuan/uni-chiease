@@ -26,7 +26,6 @@
 				</view>
 				<view class="btn" @click="downloadFn">{{langData.shareData.challengeBtn[lan]}}</view>
 			</view>
-			
 		</view>
 		
 		<!-- 表现最佳的句子录音列表 -->
