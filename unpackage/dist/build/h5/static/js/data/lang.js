@@ -97,13 +97,14 @@ export default {
 	shareCustom:{
 		title:{zh:'定制课',en:'Specific'},
 		headText01:{zh:'你的朋友在CHIease学习汉语',en:'Your friends learnt naturally in CHIease'},
-		headText02:{zh:'取得了',en:'and got'},
-		headText03:{zh:'分的好成绩～',en:'points excellently'},
+		headText02:{zh:'取得了',en:'and got '},
+		headText03:{zh:'分的好成绩～',en:' points excellently'},
 		coin:{zh:'五行币',en:'coins'},
 		totalCoinText:{zh:'共获得',en:'Obtained'},
 		rightTitle:{zh:'答题正确',en:'Perfect answer'},
 		initiativeTitle:{zh:'主动录音',en:'Active Record'},
 	},
+	
 	//测试题分享页
 	subjectResult:{
 		title:{zh:'测试报告',en:'Test Report'},
@@ -113,6 +114,22 @@ export default {
 		reportDes2:{zh:'下载App可进行针对性汉语水平测试，获取完整测试报告提升就业竞争力。',en:'Download App to complete suitable Chinese proficiency test and gain entire report to improve employability.'},
 		popTitle:{zh:'请选择下载渠道',en:'Please select download'},
 		closeBtnText:{zh:'取消',en:'Cancel'},
+	},
+	
+	//成绩分享页
+	sharePerformance:{
+		title:{zh:'成绩分享',en:'Share Your Performance'},
+		headText01:{zh:'你的朋友在CHIease学习汉语',en:'Your friends learnt naturally in CHIease'},
+		headText02:{zh:'取得了',en:'and got '},
+		headText03:{zh:'分的好成绩～',en:' points excellently'},
+		coin:{zh:'五行币',en:'coins'},
+		totalCoinText:{zh:'共获得',en:'Obtained'},
+		rightTitle:{zh:'答题正确',en:'Perfect answer'},
+		newWordTitle:{zh:'生词掌握情况',en:'Words Learned'},
+		expressionTitle:{zh:'表现最佳',en:'Top Performance'},
+		reinforceTitle:{zh:'还需加强',en:'Need More Practice'},
+		kernelTitle:{zh:'核心句子',en:'Core Sentences'},
+		kernelDes:{zh:'掌握这些核心句子，能让你在学习汉语的过程中循序渐进，学以致用，更好地用汉语流畅沟通。',en:'Step by step, by reminding you of what you have learned, the core sentences will improve your Chinese communication skills.'},
 	},
 	
 }

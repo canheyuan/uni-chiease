@@ -1,5 +1,5 @@
 <script>
-	const langData = require('./static/js/data/lang.js').default
+	const langData = require('./static/js/data/lang.js').default	//语言包
 	
 	export default {
 		globalData:{

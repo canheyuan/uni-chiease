@@ -162,7 +162,7 @@ background: -webkit-linear-gradient(left,rgba(64,213,82,1),rgba(64,197,79,1));
 }
 
 /*圆环*/
-.cirqueBox{ position: absolute; left:0; top:0; width: 60upx; height: 60upx; border-radius: 50%; -webkit-mask: radial-gradient(transparent, transparent .25upx, #000 0); mask: radial-gradient(transparent 25upx, #000 0);}
+.cirqueBox{ position: absolute; left:0; top:0; width: 60upx; height: 60upx; border-radius: 50%; -webkit-mask: radial-gradient(transparent, transparent 25upx, #000 0); mask: radial-gradient(transparent 25upx, #000 0);}
 .cirqueYellow{ position: absolute; width:100%; height: 100%; left:0; top:0; background-color:rgba(255, 193, 10, 1); z-index: 1;}
 .cirqueGrey{ position: absolute; width:100%; height: 100%; left:0; top:0; background-color:rgba(255, 255, 255, 1); z-index: 2; 
 	animation:mymove 10s linear infinite; -webkit-animation:mymove 10s linear infinite; 

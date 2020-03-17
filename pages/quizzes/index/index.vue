@@ -24,13 +24,13 @@
 		<!--测试题头部-->
 		<view class="subject_head" v-if="subjectItem">
 			<view class="progress" id="progress" :style="{width:(subjectIndex+1)/5*100+'%'}"></view>
-			<!--<div class="play_btn" @click="pauseSubject">-->
+			<!-- <view class="play_btn" @click="pauseSubject"> -->
 			<view class="play_btn">
-				<!-- <i class="icons ico_pause"></i> -->
+				<view class="icons ico_pause"></view>
 				<view class="cirqueBox">
 					<view class="cirqueYellow"></view>
 					<view 
-						:class="{'cirqueGrey':subjectIsShow,'play':examStatus}" 
+						:class="{'cirqueGrey':subjectIsShow,'play':isAnswerIn}" 
 						ref="cirqueBox"
 					></view>
 				</view>
@@ -168,11 +168,9 @@
 					@click="affirmAnswer(subjectItem.answerArr.join(','))"
 				>Submit</view>
 			</view>
-			
-			
+
 		</view>
-		
-		
+
 	</view>
 </template>
 
@@ -205,23 +203,17 @@ export default {
 			
 			subjectIsShow:false,	//题目是否显示
 			submitStatus:false,	//是否处于提交状态（防止提交中多点选项）
-			isPauseSubject:false,	//是否点击暂停做题
-			examStatus:false,	//判断是否在做题状态
-			isPlayStatus:false,	//是否在播放状态
+			isPauseSubject:false,	//是否点击暂停答题
+			isAnswerIn:false,	//判断是否在答题中
+			isPlaying:false,	//音频是否在播放中
+			
 			remainingTime:10000,	//做题剩余时间
 			currentAudioList:[],	//当前播放音频列表
 			currentaudioIndex:0,	//当前播放音频的索引
-			currentAudioUrl:'',	//当前的音频地址
-			isFirstPlay:true,	//题目是否第一次播放
-			choiceAnswer:'',
-			resultData:{},		//测试题结果页数据
-			downloadPopShow:false,	//测试题结果页下载弹窗
+			isFirstPlay:true,	//题目音频是否第一次播放
 			
+			choiceAnswer:'',	//选择正确答案
 			
-			dlUrl:app.globalData.dowmlaod,	//下载地址
-			detailData:null,	//分享接口详情信息
-			isIOS:this.$common.system()=='ios',	//是否IOS系统
-			shareId:'',	//分享id
 		}
 	},
 	onLoad(options) {
@@ -255,6 +247,30 @@ export default {
 		this.StartPopFn('open')
 	},
 	
+	//监听返回按钮
+	onBackPress(e){
+		uni.showToast({
+			title:'测试题监听返回事件'
+		})
+		console.log('测试题监听返回事件')
+		clearInterval(countTimer)
+		audioObj.pause()
+	},
+	
+	//监听页面隐藏
+	onHide(){
+		console.log('测试题监听页面隐藏事件')
+		//clearInterval(countTimer)
+		audioObj.pause();
+	},
+	
+	//监听页面卸载
+	onUnload(){
+		console.log('测试题监听页面卸载事件')
+		clearInterval(countTimer)
+		audioObj.pause()
+	},
+	
 	methods: {
 		
 		//开始前弹窗
@@ -269,6 +285,7 @@ export default {
 		//获取分享统计信息
 		getStatisticsData(tjData){
 			this.$http({
+				isLoading:false,
 				url:`/api/shareInfo/access/${tjData.shareId}`,
 				data:{
 					uniqueNums : tjData.uniqueNums
@@ -283,10 +300,7 @@ export default {
 		
 		//处理题目信息
 		getSubjectFn(){
-			
 			var subjectData = subjectListData;
-			//audioObj.src = '';
-			
 			subjectData.currentIndex = 0;
 			subjectData.level1  = [];
 			subjectData.level2 = [];
@@ -346,7 +360,6 @@ export default {
 				}
 		
 			});
-			
 			this.subjectData = subjectData;
 		},
 		
@@ -366,32 +379,35 @@ export default {
 			
 			//监听进度条css3动画结束
 			// cirqueBox.addEventListener("animationiteration", ()=>{
-			// 	_this.examStatus = false;
+			// 	_this.isAnswerIn = false;
 			// });
 			//return
+			
 			//监听播放结束事件
 			audioObj.onEnded(()=>{
-				
-				_this.isPlayStatus = false;
+				console.log('监听audioObj播放结束')
+				_this.isPlaying = false;
 				var audioIndex = _this.currentaudioIndex;
 				var audioList = _this.currentAudioList;
-				if(audioList.length==1){
+				
+				if(audioList.length==1){	//当前音频列表只有一个，就开始进入答题状态，倒计时开始
 					if(!_this.isFirstPlay){return;}
-					_this.examStatus = true;
+					_this.isAnswerIn = true;
 					_this.isFirstPlay = false;
 					_this.countTime();
 					return;
 				};
+				
+				//当前音频列表不止一个，则播放下一个音频列表（下面这段主要是用在“听音选音”题型的）
 				audioIndex++;
 				_this.currentaudioIndex = audioIndex;
-				if(audioIndex < audioList.length){ 
+				
+				if(audioIndex < audioList.length){ //判断当前音频索引是否小于音频数，是就播放，不是就结束进入开始答题状态
 					
-					_this.subjectItem.options[audioIndex-1].isPlayAudio = true;
-					console.log('听音选音1',_this.subjectItem.options)
-
-					audioObj.src = audioList[audioIndex];
+					_this.subjectItem.options[audioIndex-1].isPlayAudio = true;	//当前选项音频显示
+					audioObj.src = audioList[audioIndex];	//赋予当前选项音频地址
 					var timer = setTimeout(()=>{
-						if(!_this.isPauseSubject && !_this.submitStatus){
+						if(!_this.isPauseSubject && !_this.submitStatus){	//非暂停状态且非提交状态时，就播放音频
 							clearTimeout(timer);
 							audioObj.play();  
 						}
@@ -399,30 +415,30 @@ export default {
 				}else{
 					if(!_this.isFirstPlay){return;}
 					_this.currentaudioIndex = 0;
-					_this.examStatus = true;
+					_this.isAnswerIn = true;
 					_this.isFirstPlay = false;
 					_this.countTime();
 				}
-			},false);
+			});
 		},
 		
 		//暂停/开始做题(是否播放)
 		pauseSubject(){
 			var _this = this;
-			if(this.isPauseSubject){
+			if(this.isPauseSubject){	//是否暂停状态
 				
 				this.isPauseSubject = false;
-				if(this.isPlayStatus){ 
+				if(this.isPlaying){ 
 					audioObj.play(); 
 				}
 				if(this.remainingTime<10000){ 
-					this.examStatus = true;
+					this.isAnswerIn = true;
 					_this.countTime(); 
 				}
 			}else{
 				clearInterval(countTimer);
 				audioObj.pause();
-				this.examStatus = false;
+				this.isAnswerIn = false;
 				this.isPauseSubject = true;
 			}
 		},
@@ -449,7 +465,7 @@ export default {
 			setTimeout(()=>{
 				if(!this.isPauseSubject){
 					audioObj.play();
-					this.isPlayStatus = true;
+					this.isPlaying = true;
 				 }
 			},100);
 		},
@@ -522,7 +538,7 @@ export default {
 			audioObj.pause();
 			clearInterval(countTimer);
 			this.submitStatus = true;
-			this.examStatus = false;
+			this.isAnswerIn = false;
 			this.currentaudioIndex = 0;
 			this.skipNextSubject();
 		},
@@ -539,7 +555,6 @@ export default {
 			if(this.subjectIndex == 4){
 				console.log('跳转下一题333')
 				setTimeout(function(){
-					
 					var level = parseInt(subjectStore);
 					uni.navigateTo({ url:`../result/index?level=${level}` })
 					//window.location.href = `subject-result.html?shareid=1&level=${level}`;
@@ -599,6 +614,7 @@ export default {
 		//统计完成率
 		getStatisticsFn(shareid,uniqueNums){
 			this.$http({
+				isLoading:false,
 				url:`/api/shareInfo/operate/${shareid}`,
 				data:{
 					uniqueNums : uniqueNums
@@ -609,17 +625,6 @@ export default {
 			})
 		},
 		
-		//下载按钮判断
-		downloadFn(){
-			if(this.isIOS){
-				uni.navigateTo({ url: `/pages/common/web-view/index?url=${this.dlUrl.apple}` });
-			}else{
-				uni.pageScrollTo({		//uni-app中页面滚动接口
-					scrollTop:10000,//滚动到页面的目标位置（单位px）
-					duration:100  //滚动动画的时长，默认300ms，单位 ms
-				})
-			}
-		}
 	}
 }
 </script>

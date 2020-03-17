@@ -35,11 +35,11 @@ var http = (option) => {
 	opt.header = Object.assign(commonHeader, opt.header)
 	opt.header['content-type'] = opt.headerType
 	
-	
 	//var headerData = vue.$store.state.headerData
 	//headerData = headerData ? Object.assign(opt.headerData, headerData) : opt.headerData; //合并header参数
 	//alert('加载axios'+JSON.stringify(headerData))
 	console.log('opt',opt)
+	if(opt.isLoading){uni.showLoading({ title: 'Loading' });}
 	uni.request({
 		url: (opt.isApiUrl?apiUrl:'') + opt.url, //仅为示例，并非真实接口地址。
 		data:opt.data,
@@ -48,13 +48,15 @@ var http = (option) => {
 		dataType: opt.dataType,
 		responseType :opt.responseType,
 		success: (res) => {
+			if(opt.isCloseLoading){uni.hideLoading()}
 			if(res.data.code == 0){
 				opt.success && opt.success(res.data)
 			}
 			opt.successOther && opt.successOther(res.data)
 		},
 		fail:(res)=>{
-		 opt.fail && opt.fail(res)
+			uni.hideLoading()
+			opt.fail && opt.fail(res)
 		},
 		complete:(res)=>{
 			opt.complete && opt.complete(res)

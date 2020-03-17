@@ -15,7 +15,8 @@
 		{ "path": "pages/punch/target/index", "style": { "navigationBarTitleText": "打卡目标", "app-plus": {"titleNView": false} } },
 		{ "path": "pages/punch/guide/index", "style": { "navigationBarTitleText": "打卡指引", "app-plus": {"titleNView": false} } },
 		{ "path": "pages/quizzes/index/index", "style": { "navigationBarTitleText": "测试题", "app-plus": {"titleNView": false} } },
-		{ "path": "pages/quizzes/result/index", "style": { "navigationBarTitleText": "测试结果", "app-plus": {"titleNView": false} } }
+		{ "path": "pages/quizzes/result/index", "style": { "navigationBarTitleText": "测试结果", "app-plus": {"titleNView": false} } },
+		{ "path": "pages/common/echarts-demo/echarts-demo", "style": { "navigationBarTitleText": "echarts demo", "app-plus": {"titleNView": false} } }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

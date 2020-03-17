@@ -5,7 +5,7 @@
 		
 		<!--配音课头部-->
 		<view class="dub_head" v-if="detailData">
-			<view class="dub_video" @click="changVideoStatusFn">
+			<view class="dub_video" @click="changeVideoStatusFn">
 				<video
 					muted="true" :controls='false' :show-center-play-btn='false' :show-play-btn="false"
 					class="video" id="myVideo" :src="detailData.video" v-if="detailData.video" 
@@ -81,12 +81,12 @@
 				imgUrl:app.globalData.imgUrl,
 				langData:app.globalData.langData,	//语言文件
 				lan:app.globalData.lan,	//当前语言
-				dlUrl:app.globalData.dowmlaod,	//下载地址
 				detailData:null,	//分享接口详情信息
+				dlUrl:app.globalData.dowmlaod,	//下载地址
 				isIOS:this.$common.system()=='ios',	//是否IOS系统
 				shareId:'',	//分享id
 				scoreWidth:0,	//分数宽度
-				isVideoPlay:false,	//视频是否播放中
+				isVideoPlay:true,	//视频是否播放中
 			}
 		},
 		onLoad(options) {
@@ -123,6 +123,7 @@
 					}
 				})
 			},
+			
 			
 			//下载跳转
 			downloadFn(){

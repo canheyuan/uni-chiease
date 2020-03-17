@@ -42,9 +42,9 @@
 			//获取地址栏参数，并设置给globalData
 			if(!app.globalData.isFirst){	//首次App.vue有加载就不需要再加载
 				this.$common.pageLoadFn({
-					test:options.query,
-					lan :options.query.lan,
-					source:options.query.source
+					test:options.test,
+					lan :options.lan,
+					source:options.source
 				})
 				this.getDetailFn();
 			}else{

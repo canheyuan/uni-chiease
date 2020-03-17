@@ -71,15 +71,19 @@
 		},
 		onLoad(options) {
 			//获取地址栏参数，并设置给globalData
+			console.log('punch-index-onLoad')
 			if(!app.globalData.isFirst){	//首次App.vue有加载就不需要再加载
 				this.$common.pageLoadFn({
-					test:options.query,
-					lan :options.query.lan,
-					source:options.query.source
+					test:options.test,
+					lan :options.lan,
+					source:options.source
+				},()=>{
+					this.getDetailFn();
 				})
-				this.getDetailFn();
+				
 			}else{
 				app.globalData.isFirst = false
+				this.getDetailFn();
 			}
 			
 		},

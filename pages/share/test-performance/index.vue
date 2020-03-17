@@ -1,86 +1,76 @@
 <template>
 	<view>
 		<!-- 底部下载提示 -->
-		<download-top :detailData="detailData" :lan="lan"></download-top>
+		<download-top  v-if="detailData" :detailData="detailData" :lan="lan"></download-top>
 		
 		<!--定制课头部-->
-		<view class="custom_head" v-if="detailData">
-			<view class="star_list">
+		<view class="custom_head">
+			<view class="star_list" v-if="detailData">
 				<view 
 					v-for="item in [1,2,3]" :key="item"
 					:class="['span',{'act':item<=detailData.star}]"
 				></view>
 			</view>
-			<view class="score">{{detailData.score}}</view>
-			<view class="text">
-				{{langData.shareCustom.headText01[lan]}}<br>
-				{{langData.shareCustom.headText02[lan] + detailData.score + langData.shareCustom.headText03[lan]}}
-			</view>
+			<view class="score"  v-if="detailData">{{detailData.score}}</view>
+			<text class="text"  v-if="detailData">
+				{{langData.sharePerformance.headText01[lan]}}<br>
+				{{langData.sharePerformance.headText02[lan] + detailData.score + langData.sharePerformance.headText03[lan]}}
+			</text>
 			
-			<view class="custom_data">
+			<view class="custom_data" v-if="detailData">
 				<view class="money"><i class="icons ico_money"></i></view>
 				<view class="info">
-					<view class="h3">{{langData.shareCustom.totalCoinText[lan]}} {{detailData.totalCoin}} {{langData.shareCustom.coin[lan]}}</view>
-					<view class="h4">{{langData.shareCustom.rightTitle[lan]}}</view>
-					<view class="p">+ {{detailData.rightCoin}} {{langData.shareCustom.coin[lan]}}</view>
+					<view class="h3">{{langData.sharePerformance.totalCoinText[lan]}} {{detailData.totalCoin}} {{langData.sharePerformance.coin[lan]}}</view>
+					<view class="h4">{{langData.sharePerformance.rightTitle[lan]}}</view>
+					<view class="p">+ {{detailData.rightCoin}} {{langData.sharePerformance.coin[lan]}}</view>
 				</view>
 				<view class="btn" @click="downloadFn">{{langData.shareData.challengeBtn[lan]}}</view>
 			</view>
 		</view>
 		
 		<!-- 表现最佳的句子录音列表 -->
-		<record-list v-if="detailData && detailData.paraList" :detailData="detailData" :lan="lan"></record-list>
+		<record-list v-if="detailData && detailData.bestParaList" :detailData="detailData" :lan="lan"></record-list>
 		
 		<!-- 生词掌握情况 -->
-		<view class="sczw_mdl">
-			<image class="pj_img" mode="widthFix" :src="imgUrl+'/ico_B.png'"></image>
-			<view class="sczw_title"><view class="icons ico_word"></view>生词掌握情况</view>
+		<view class="sczw_mdl"  v-if="detailData && (detailData.bestLexiconList || detailData.badLexiconList)">
+			<image v-if="detailData.lexiconLevel" class="pj_img" mode="widthFix" :src="imgUrl+'/ico_'+ detailData.lexiconLevel +'.png'"></image>
+			<view class="sczw_title"><view class="icons ico_word"></view>{{langData.sharePerformance.newWordTitle[lan]}}</view>
 			<view class="sczw_ctn">
-				<view class="bxzj_box">
-					<view class="tit"><view class="icons ico_gou"></view><text class="text">表现最佳</text></view>
+				<view class="bxzj_box" v-if="detailData.bestLexiconList">
+					<view class="tit"><view class="icons ico_gou"></view><text class="text">{{langData.sharePerformance.expressionTitle[lan]}}</text></view>
 					<view class="bxzj_list">
-						<view class="li">女生</view>
-						<view class="li">先生</view>
-						<view class="li">请</view>
-						<view class="li">对不起</view>
-						<view class="li">女生</view>
-						<view class="li">女生</view>
-						<view class="li">女生</view>
+						<view class="li" v-for="item in detailData.bestLexiconList" :key="item">{{item}}</view>
 					</view>
 				</view>
-				<view class="xyjq_box">
-					<view class="tit"><view class="icons ico_th"></view><text class="text">还需加强</text></view>
+				<view class="xyjq_box" v-if="detailData.badLexiconList">
+					<view class="tit"><view class="icons ico_th"></view><text class="text">{{langData.sharePerformance.reinforceTitle[lan]}}</text></view>
 					<view class="xyjq_list">
-						<view class="li">小</view>
-						<view class="li">董事长</view>
-						<view class="li">你好</view>
-						<view class="li">小</view>
+						<view class="li" v-for="item in detailData.badLexiconList" :key="item">{{item}}</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		
 		<!-- 生词掌握情况 -->
-		<view class="hxjz_mdl">
-			<view class="hxjz_title"><view class="icons ico_hxjz"></view>核心句子</view>
+		<view class="hxjz_mdl" v-if="detailData && detailData.impoParaList">
+			<view class="hxjz_title"><view class="icons ico_hxjz"></view>{{langData.sharePerformance.kernelTitle[lan]}}</view>
 			<view class="hxjz_ctn">
 				<view class="hxjz_list">
-					<view class="li"><view class="dot"></view><view class="text">这儿是什么地方?</view></view>
-					<view class="li"><view class="dot"></view><view class="text">洗手间在哪儿?</view></view>
-					<view class="li"><view class="dot"></view><view class="text">这儿是财务部吗?</view></view>
-					<view class="li"><view class="dot"></view><view class="text">哪个办公室?</view></view>
+					<view class="li"  v-for="item in detailData.impoParaList" :key="item">
+						<view class="dot"></view><view class="text">{{item}}</view>
+					</view>
 				</view>
 			
 				<view class="zs_box">
 					<image class="bg" :src="imgUrl+'/textbook/q_ico.png'"></image>
-					<view class="zh">掌握这些核心句子，能让你在学习汉语的过程中循序渐进，学以致用，更好地用汉语流畅沟通。</view>
+					<view class="zh">{{langData.sharePerformance.kernelDes[lan]}}</view>
 				</view>
 			</view>
 		</view>
 		
 		
 		<!-- 底部下载按钮 -->
-		<download-bottom :detailData="detailData"  :lan="lan"></download-bottom>
+		<download-bottom v-if="detailData" :detailData="detailData"  :lan="lan"></download-bottom>
 	</view>
 </template>
 
@@ -116,7 +106,7 @@
 			//获取分享详情信息
 			getShareDetailFn(shareId){
 				this.$http({
-					url:`/api/shareInfo/cusStuShareInfo/${shareId}`,
+					url:`/api/shareInfo/cusStuExtShareInfo/${shareId}`,
 					success:(res)=>{
 						var detailData =  res.data;
 						this.lan = detailData.lan?detailData.lan:'en'
@@ -279,8 +269,6 @@ page{background:#f7f7f7;}
 			.zh{font-size:32upx; line-height:44upx; color:#242629; padding:20upx 42upx 20upx 26upx; position:relative; z-index:1; }
 		}
 	}
-	
-		
 }
 
 </style>
