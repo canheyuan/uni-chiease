@@ -1,9 +1,11 @@
 <template>
 	<view class="page_list">
-		<navigator 
+		<view>{{watchText}}</view>
+		<view style="padding:30upx;" @click="changeWatchFn">改变watchText</view>
+		<!-- <navigator 
 			v-for="(item,index) in navList" :key="index"
 			:url="item.url" class="a" 
-		>{{item.title}}</navigator>
+		>{{item.title}}</navigator> -->
 	</view>
 </template>
 
@@ -11,6 +13,7 @@
 	export default {
 		data() {
 			return {
+				watchText:'123',
 				navList:[
 					{title:'配音课分享页（ok）',url:'../share/dub/index?shareid=6e016f3f111c352a85ecd069e360534a'},
 					{title:'口语课分享页（ok）',url:'../share/spoken/index?shareid=b5c31a79257ffb3ac2c3af79377932f6'},
@@ -29,15 +32,25 @@
 					{title:'',url:''},
 					{title:'拼音表',url:'../static/pinyin-table/index'},
 					{title:'教材有声读物（ok）',url:'../textbook/index/index'},
-					{title:'demo',url:'../common/demo/demo'},
 				]
 			}
 		},
 		onLoad() {
-			
+			console.log('watchText改变111')
+			// this.$watch('watchText', function (newValue, oldValue) {
+			//    console.log('watchText改变',newValue,oldValue)
+			// })
+		},
+		watch:{
+			watchText(newValue, oldValue){
+				console.log('watchText改变222',newValue,oldValue)
+				
+			}
 		},
 		methods: {
-
+			changeWatchFn(){
+				this.watchText = '456'
+			}
 		}
 	}
 </script>

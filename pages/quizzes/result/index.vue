@@ -41,8 +41,8 @@
 		</view>
 		
 		<!--下载弹窗-->
-		<div class="mask_bg" v-show="downloadPopShow">
-			<div class="mask_bg_ctn" style="vertical-align: bottom;">
+		<view class="mask_bg" v-show="downloadPopShow">
+			<view class="mask_bg_ctn" style="vertical-align: bottom;">
 				<div class="download_pop_btn">
 					<h3 class="tit">{{langData.subjectResult.popTitle[lan]}}</h3>
 					<a @click="gotoDownload(dlUrl.app)"  v-if="system=='pc'">
@@ -56,8 +56,8 @@
 					</a>
 				</div>
 				<div class="download_pop_close" @click="downloadFn">{{langData.subjectResult.closeBtnText[lan]}}</div>
-			</div>	
-		</div>
+			</view>	
+		</view>
 		
 		
 	</view>
