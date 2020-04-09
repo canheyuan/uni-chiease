@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"echarts_box{width:100%; height:",[0,1000],";}\n",],undefined,{path:"./pages/common/echarts-demo/echarts-demo.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/common/echarts-demo/echarts-demo.wxml') } }));

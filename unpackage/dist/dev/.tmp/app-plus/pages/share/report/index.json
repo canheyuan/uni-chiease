@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "测试报告分享页",
+  "titleNView": false,
+  "usingComponents": {
+    "download-top": "/pages/share/tpl/download-top",
+    "download-bottom": "/pages/share/tpl/download-bottom",
+    "arcbar-chart": "/components/stan-ucharts/ArcbarChart"
+  }
+}

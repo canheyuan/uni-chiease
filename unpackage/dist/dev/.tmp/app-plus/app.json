@@ -1,0 +1,43 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/common/demo/demo",
+    "pages/common/web-view/index",
+    "pages/share/spoken/index",
+    "pages/share/report/index",
+    "pages/share/punch/index",
+    "pages/share/custom/index",
+    "pages/share/dub/index",
+    "pages/share/test-performance/index",
+    "pages/static/pinyin-table/index",
+    "pages/textbook/index/index",
+    "pages/punch/index/index",
+    "pages/punch/tip/index",
+    "pages/punch/target/index",
+    "pages/punch/guide/index",
+    "pages/quizzes/index/index",
+    "pages/quizzes/result/index",
+    "pages/common/echarts-demo/echarts-demo",
+    "pages/wordcard/index/index",
+    "pages/wordcard/exercise/index",
+    "pages/wordcard/exercise/index-draw",
+    "pages/wordcard/result/index",
+    "pages/wordcard/result/index-draw",
+    "pages/wordcard/draw/index"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "CHIease",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "nvueCompiler": "uni-app",
+  "renderer": "auto",
+  "splashscreen": {
+    "alwaysShowBeforeRender": true,
+    "autoclose": false
+  },
+  "appname": "CHIease",
+  "compilerVersion": "2.4.2",
+  "usingComponents": {}
+}

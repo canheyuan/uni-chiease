@@ -1,0 +1,808 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.topic-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background: url(../../static/img/topic_bg.ee2faf52.png) no-repeat center center;
+  background-size: 100% 100%;
+}
+.topic-page .close-page {
+  width: 40rpx;
+  height: 40rpx;
+  background-position: -80rpx 0;
+  position: fixed;
+  top: 30rpx;
+  left: 30rpx;
+}
+.topic-progress {
+  position: fixed;
+  bottom: 30rpx;
+  right: 30rpx;
+}
+.topic-progress .progress-num {
+  display: inline-block;
+  color: #fff;
+  font-size: 30rpx;
+  line-height: 32rpx;
+  margin-right: 10rpx;
+  vertical-align: middle;
+}
+.topic-progress .progress {
+  height: 16rpx;
+  width: 200rpx;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 80rpx;
+  font-size: 0;
+  vertical-align: middle;
+}
+.topic-progress .progress ._span {
+  height: 16rpx;
+  display: inline-block;
+  background: #fff;
+  border-radius: 80rpx;
+  -webkit-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+}
+/* 退出提示弹窗 */
+.close-page-tip-pop {
+  width: 640rpx;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20rpx;
+  position: relative;
+  padding: 50rpx 0;
+  text-align: center;
+}
+.close-page-tip-pop .close {
+  display: inline-block;
+  width: 64rpx;
+  height: 64rpx;
+  position: absolute;
+  top: -20rpx;
+  right: -20rpx;
+}
+.close-page-tip-pop .close ._img {
+  width: 100%;
+  height: 100%;
+}
+.close-page-tip-pop .title {
+  font-size: 48rpx;
+  line-height: 66rpx;
+  font-weight: normal;
+  color: #333;
+  margin-bottom: 30rpx;
+}
+.close-page-tip-pop ._p {
+  color: #242629;
+  font-size: 32rpx;
+  line-height: 44rpx;
+  margin: 0 30rpx 60rpx;
+}
+.close-page-tip-pop .pop_btn01 {
+  display: block;
+  width: 460rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #fff;
+  font-size: 34rpx;
+  border-radius: 50rpx;
+  -webkit-box-shadow: 0 8rpx 28rpx 0 rgba(247, 157, 0, 0.5);
+          box-shadow: 0 8rpx 28rpx 0 rgba(247, 157, 0, 0.5);
+  margin: 0 auto 30rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: -webkit-linear-gradient(left, #FFC10A, #FFA100);
+}
+.close-page-tip-pop .pop_btn02 {
+  display: block;
+  width: 460rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #FFC10A;
+  font-size: 34rpx;
+  border-radius: 50rpx;
+  margin: 0 auto 30rpx;
+  background: #fff;
+  border: 2rpx solid #FFC10A;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.close-page-tip-pop .pop_btn03 {
+  display: block;
+  font-size: 32rpx;
+  color: #999;
+  padding-top: 10rpx;
+  text-decoration: underline;
+  line-height: 40rpx;
+}
+.topic-box {
+  width: 100%;
+  height: 90%;
+  position: relative;
+  text-align: center;
+  opacity: 0;
+  -webkit-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+}
+.topic-box.box_animate {
+  opacity: 1;
+}
+/* 看图选择01 */
+.topic-box01 {
+  height: 95%;
+}
+.topic-answer-list01 ._li {
+  position: absolute;
+  width: 272rpx;
+  height: 272rpx;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+  border-radius: 100%;
+}
+.topic-answer-list01 ._li:before {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  -webkit-transform: scale(1.1, 1.1);
+      -ms-transform: scale(1.1, 1.1);
+          transform: scale(1.1, 1.1);
+  opacity: 0;
+}
+.topic-answer-list01 ._li:nth-child(1) {
+  left: 50rpx;
+  top: 100rpx;
+}
+.topic-answer-list01 ._li:nth-child(2) {
+  right: 50rpx;
+  top: 100rpx;
+}
+.topic-answer-list01 ._li:nth-child(3) {
+  left: 50rpx;
+  bottom: 100rpx;
+}
+.topic-answer-list01 ._li:nth-child(4) {
+  right: 50rpx;
+  bottom: 100rpx;
+}
+.topic-answer-list01 ._li ._img {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  border-radius: 100%;
+  position: relative;
+  z-index: 10;
+}
+.topic-answer-list01 ._li.overlap:before {
+  opacity: 1;
+}
+.topic-question {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 300rpx;
+  height: 220rpx;
+  margin-left: -150rpx;
+  margin-top: -110rpx;
+  border-radius: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-top: 40rpx;
+  color: #fff;
+  text-align: center;
+}
+.topic-question:before {
+  content: '';
+  display: inline-block;
+  width: 200rpx;
+  height: 200rpx;
+  margin-left: -100rpx;
+  margin-top: -100rpx;
+  border-radius: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 9;
+  -webkit-transform: scale(1, 1);
+      -ms-transform: scale(1, 1);
+          transform: scale(1, 1);
+  opacity: 0;
+}
+.topic-question ._h3 {
+  font-size: 56rpx;
+  line-height: 80rpx;
+  position: relative;
+  z-index: 10;
+}
+.topic-question ._p {
+  font-size: 32rpx;
+  line-height: 44rpx;
+  position: relative;
+  z-index: 10;
+}
+.ico-hand {
+  display: inline-block;
+  width: 100rpx;
+  height: 144rpx;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAACQCAMAAADJPz5pAAABNVBMVEX///////////////////////////9HcEz////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////SFBzlAAAAZ3RSTlNZTCUkBUcMACZxK1g8YgFFEioCFxwfLTNUUlMQGSEOVwkbHSNQVQoYBCdREXA5PS8IFhpWTzRnNQZJKAMPRAcTOilOakYwDT8yO0sgQl9KYxULLh42Xm1IN2U4QUNcWmg+FGwiWywx+mEn4gAABXlJREFUaN7t23d7okgYAHAEIkQ2BCEm9poYNZYkxjRN72VTNne7d9uu3/f/CBdlRociMIXbvee59y+H+PCTgZl55zVy0r8Q3LdH1KJmlHMVnq/kyoZWVNkjer4kyJYQSnmdKSIaNgE4hsgMEbO8PCX4rMgEUTVB9ghBU+kRMSH7REKkRaKC7BtClA7J8HKA4DM0yJEcMI7IkYwcODKkSJQPjvBRMkQUZIwQRBJETchYkVAJEE3GDA0fwessjA5DkayMHVlcROTxEV7ERAyZIAw8RBdIEEHHQvIyUeSxkBIZUsJBVIEMEVQMpCgTRhED0UgRDQMxSBEDAymTImUMJEeK5DCQyrSTtBpzvzffP6bbdfe/VzCQKRNX63EWxvaV+/RFi+x3Z9H4EqNE3Lor9nbWGj936LrL5cbX7carEqe68S6P8PKsMziqR9g5GHtNF2S2TTMYndPKn+C0ZzOd+rv5X0DrkWZacUyQ1+Csc3+NmvEfQfuGYoJ0TPW34DoWQTu+bR5IUkz1jkULfPLz8YErMCYpFi3H8ns2OmVzMv7q780jJxTLrz2RcH5uMGwuKBIJ20N8Am47cogzD11TpES25C4+FVmiSe6saWowBDtNtSbcgRCChNsy6gMhBFsHyyYoCEK0CUI7LABCtp1DN6b+COnGFNli+yPEW+xJscAXoSgWjMsePghd2QMWcLwR2gIOKEV5IvSlKLOo5oEwKaqNyoPTZ2FZVNerNSaFzup20w1pbn/p3K9wnBLpafSIyH2dO2takebZ3FduEu0qPTKMt0mk+PyZs0V6Y/jOwwU5Ljzp5Ag3gxx6Y0e47oa0eq+MXiZ7zyEhXOpq8nplPyTEGi2dIbLS7p27Kh/ZIffDzLSUdFN4Vshef9TadEOSRT2zWTbWqZEEaLbhmbcWc50GeP1gXuBevU+HLIAmvJTPwynmcN52TZEsE0Q0BwgXG7V2t2yKss8CkWZQRPrDcYNiLJAly7n6K3ZEWWWALFo/8IHjUpZF5kgLjNSPF2Muzhy5Npvzw5EKuq6hs0ZiE0QqgUtZZY3wCCLdmI2/WSMvKLJhNs5ZIwaK6F1zvWGNrKGIdDpqFFgjVQsSMVvYSJYfRXQK0ldYIPawIVL6P4tkEqMYhIrY43tCivLNQyN1+ymmhYZcvimMl4L5u3CQ/a5LjoODDNaGcemB6D+45oQ4iCVckZ+48BGeCx+pTu5HOhUWAm/Icv01ma7d7YWBHIJndwZkyvpOCEgOJBeTbPyYPXLj2F2IW8wR80hhF3nTqsIaMXOxiOVdO6wR81N/sE7Dp4yRJJK/WDuMIQLGha1assMWARNX2/q+2ilTJAFGxYujwxgiNbApT1ftHcZy7rqAdQB7h7FEduHUe2J9q8F0PVkASGHN+t4KS2Q82d/2JSbhitTAUa4XIiIdwXxoM0QEbizRVYU9osLt91WIiPSc9CyNsUGkO1j+y4eITFZ2nRpRpiLmQvUaHVpDBYUit/3JE/gAygYlAnYeSddN0DtYVxTpkDw4jSuignIcd0yHlNBNvWM7dwkLcHdUCNgZt6bsGSuwxPtMgxygK4fLxhTWew9UcqMKHqDfpiGHy/ZqKH6A5yc5vXIHMlSuQPwcw4W25VGDvKZ9jnvWVcMV0ffoBj7siohnXXjQpemwPMxKBO/icx1+nTTAN9bgg3Or+lS4P0HlCddYGH97k/Wr1Y+fY+UC6+5XJ1987Ui+XwjAm/f6sO+UM9FAMXg5nlRnPtT8kfFtIYxlJK32+CVNh8pAV3Cv3wTtK8RG5FIKiEibDULj110pMCKtH5NcTMP+X4t+v9PSkGpewLsRc/xDgP+PwdaF1kMq2AUpqfOlrEs29R384ux/5Fsg/wCrKazx/Yz5dAAAAABJRU5ErkJggg==) no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -50rpx;
+  margin-top: 10rpx;
+  z-index: 101;
+  display: none;
+}
+.topic-question.no_drap:before {
+  opacity: 1;
+  -webkit-animation: flicker 5s linear 0s infinite normal;
+          animation: flicker 5s linear 0s infinite normal;
+}
+.topic-box.static .ico-hand {
+  -webkit-animation: handTip 2.5s linear 0s infinite normal;
+          animation: handTip 2.5s linear 0s infinite normal;
+  display: block;
+}
+@-webkit-keyframes handTip {
+0% {
+    opacity: 1;
+}
+1% {
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+}
+50% {
+    top: 80%;
+    left: 25%;
+    opacity: 1;
+}
+55% {
+    top: 80%;
+    left: 25%;
+    opacity: 0;
+}
+100% {
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+}
+}
+@keyframes handTip {
+0% {
+    opacity: 1;
+}
+1% {
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+}
+50% {
+    top: 80%;
+    left: 25%;
+    opacity: 1;
+}
+55% {
+    top: 80%;
+    left: 25%;
+    opacity: 0;
+}
+100% {
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+}
+}
+@-webkit-keyframes flicker {
+0% {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 0;
+}
+50% {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 1;
+}
+65% {
+    -webkit-transform: scale(2, 2);
+            transform: scale(2, 2);
+    opacity: .1;
+}
+70% {
+    -webkit-transform: scale(2, 2);
+            transform: scale(2, 2);
+    opacity: 0;
+}
+75% {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 0;
+}
+80% {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 1;
+}
+95% {
+    -webkit-transform: scale(2, 2);
+            transform: scale(2, 2);
+    opacity: .1;
+}
+100% {
+    -webkit-transform: scale(2, 2);
+            transform: scale(2, 2);
+    opacity: 0;
+}
+}
+@keyframes flicker {
+0% {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 0;
+}
+50% {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 1;
+}
+65% {
+    -webkit-transform: scale(2, 2);
+            transform: scale(2, 2);
+    opacity: .1;
+}
+70% {
+    -webkit-transform: scale(2, 2);
+            transform: scale(2, 2);
+    opacity: 0;
+}
+75% {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 0;
+}
+80% {
+    -webkit-transform: scale(0, 0);
+            transform: scale(0, 0);
+    opacity: 1;
+}
+95% {
+    -webkit-transform: scale(2, 2);
+            transform: scale(2, 2);
+    opacity: .1;
+}
+100% {
+    -webkit-transform: scale(2, 2);
+            transform: scale(2, 2);
+    opacity: 0;
+}
+}
+/* 02-排序题 */
+.topic-box02 {
+  padding-top: 120rpx;
+}
+.topic-box02 .ques-img {
+  width: 420rpx;
+  height: 420rpx;
+}
+.topic-question-list02 {
+  display: block;
+  width: 100%;
+  color: #fff;
+  height: calc(100% - 450rpx);
+  position: relative;
+  z-index: 999;
+}
+.topic-question-list02 ._li {
+  display: inline-block;
+  position: absolute;
+  left: 30rpx;
+  top: 30rpx;
+  width: 112rpx;
+  height: 112rpx;
+}
+.topic-question-list02 ._li:before {
+  content: '';
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+}
+.topic-question-list02 ._li ._span {
+  display: inline-block;
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 100%;
+  font-size: 56rpx;
+  text-align: center;
+  line-height: 112rpx;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+}
+.topic-question-list02 ._li.hover:before {
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-transform: scale(1.1, 1.1);
+      -ms-transform: scale(1.1, 1.1);
+          transform: scale(1.1, 1.1);
+}
+.topic-answer-list02 {
+  position: absolute;
+  bottom: 0;
+  left: 50rpx;
+  width: 650rpx;
+  height: 120rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 2rpx solid #fff;
+  padding-top: 20rpx;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+}
+.topic-answer-list02 ._li {
+  display: inline-block;
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: 2rpx solid #fff;
+  vertical-align: top;
+  color: #fff;
+  font-size: 52rpx;
+  margin: 0 5rpx;
+}
+.topic-answer-list02.overlap {
+  border-color: #FFC10A;
+  background: rgba(255, 255, 255, 0.3);
+}
+/* 03-判断题 */
+.topic-box03 {
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-top: 200rpx;
+}
+.topic-box03 .question-box {
+  display: block;
+  width: 520rpx;
+  height: 520rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-top: 40rpx;
+  margin: 0 auto 0;
+}
+.topic-box03 .question-box ._img {
+  display: inline-block;
+  width: 272rpx;
+  height: 272rpx;
+}
+.topic-box03 .question-box ._h3 {
+  font-size: 56rpx;
+  line-height: 80rpx;
+  color: #fff;
+}
+.topic-box03 .question-box ._p {
+  font-size: 32rpx;
+  line-height: 48rpx;
+  color: #fff;
+}
+.topic-box03 .answer-box {
+  position: absolute;
+  bottom: 80rpx;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.topic-box03 .answer-box .btn {
+  display: inline-block;
+  width: 144rpx;
+  height: 144rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 4rpx solid #fff;
+  border-radius: 100%;
+  padding: 43rpx;
+  vertical-align: top;
+}
+.topic-box03 .answer-box .btn .ico-mistake {
+  width: 50rpx;
+  height: 50rpx;
+  background-position: 0 -80rpx;
+}
+.topic-box03 .answer-box .btn .ico-correct {
+  width: 50rpx;
+  height: 50rpx;
+  background-position: -50rpx -80rpx;
+}
+.topic-box03 .answer-box .txt {
+  font-size: 32rpx;
+  color: #fff;
+  line-height: 144rpx;
+  vertical-align: top;
+  margin: 0 80rpx;
+}
+.topic-box03 .answer-box .btn:active,
+.topic-box03 .answer-box .btn.hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+.animated {
+  -webkit-animation-duration: .6s;
+  animation-duration: .6s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  z-index: 100;
+}
+.animated.infinite {
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+.animated.hinge {
+  -webkit-animation-duration: 2s;
+  animation-duration: 2s;
+}
+/* @-webkit-keyframes shake {
+0%, 100% {-webkit-transform:translateX(0);transform:translateX(0)}
+10%, 30%, 50%, 70%, 90% {-webkit-transform:translateX(-10px);transform:translateX(-10px)}
+20%, 40%, 60%, 80% {-webkit-transform:translateX(10px);transform:translateX(10px)}
+} */
+@-webkit-keyframes shake {
+0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+30% {
+    -webkit-transform: translateX(-20px);
+    transform: translateX(-20px);
+}
+45% {
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px);
+}
+55% {
+    -webkit-transform: translateX(-10px);
+    transform: translateX(-10px);
+}
+70% {
+    -webkit-transform: translateX(10px);
+    transform: translateX(10px);
+}
+80% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+}
+100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+}
+@keyframes shake {
+0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+30% {
+    -webkit-transform: translateX(-20px);
+    transform: translateX(-20px);
+}
+45% {
+    -webkit-transform: translateX(20px);
+    transform: translateX(20px);
+}
+55% {
+    -webkit-transform: translateX(-10px);
+    transform: translateX(-10px);
+}
+70% {
+    -webkit-transform: translateX(10px);
+    transform: translateX(10px);
+}
+80% {
+    -webkit-transform: translateX(-5px);
+    transform: translateX(-5px);
+}
+100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+}
+}
+.shake {
+  -webkit-animation-name: shake;
+  animation-name: shake;
+}
+@-webkit-keyframes spanHover {
+0% {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+    background: rgba(255, 255, 255, 0.5);
+}
+100% {
+    -webkit-transform: scale(1.2, 1.2);
+            transform: scale(1.2, 1.2);
+    background: rgba(255, 255, 255, 0.5);
+}
+}
+@keyframes spanHover {
+0% {
+    -webkit-transform: scale(1, 1);
+            transform: scale(1, 1);
+    background: rgba(255, 255, 255, 0.5);
+}
+100% {
+    -webkit-transform: scale(1.2, 1.2);
+            transform: scale(1.2, 1.2);
+    background: rgba(255, 255, 255, 0.5);
+}
+}
+/* 题目介绍和答案 */
+.topic-answer {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 640rpx;
+  margin-top: -320rpx;
+  color: #fff;
+}
+.topic-answer .txt {
+  position: relative;
+  -webkit-transform: translateY(-4rpx);
+      -ms-transform: translateY(-4rpx);
+          transform: translateY(-4rpx);
+  -webkit-transition: all .2s;
+  -o-transition: all .2s;
+  transition: all .2s;
+  opacity: 0;
+}
+.topic-answer ._h3 {
+  font-size: 80rpx;
+  line-height: 110rpx;
+}
+.topic-answer ._p {
+  font-size: 40rpx;
+  line-height: 56rpx;
+  margin-bottom: 50rpx;
+}
+.topic-answer ._img {
+  width: 420rpx;
+  height: 420rpx;
+  display: inline-block;
+  position: relative;
+  -webkit-transform: translateY(400rpx);
+      -ms-transform: translateY(400rpx);
+          transform: translateY(400rpx);
+  -webkit-transition: all .2s;
+  -o-transition: all .2s;
+  transition: all .2s;
+  opacity: 0;
+  font-size: 36rpx;
+  color: #fff;
+}
+.learn_btn {
+  display: block;
+  width: 420rpx;
+  height: 110rpx;
+  line-height: 106rpx;
+  text-align: center;
+  border-radius: 55rpx;
+  border: 2rpx solid #fff;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0 auto 0;
+  color: #fff;
+  -webkit-transition: all .4s linear .2s;
+  -o-transition: all .4s linear .2s;
+  transition: all .4s linear .2s;
+  opacity: 0;
+}
+.learn_btn:active {
+  background: rgba(255, 255, 255, 0.2);
+}
+.topic-answer.s-animate .txt {
+  -webkit-transform: translateY(-80rpx);
+      -ms-transform: translateY(-80rpx);
+          transform: translateY(-80rpx);
+  opacity: 1;
+}
+.topic-answer.s-animate ._img {
+  -webkit-transform: translateY(-80rpx);
+      -ms-transform: translateY(-80rpx);
+          transform: translateY(-80rpx);
+  opacity: 1;
+}
+.topic-answer.s-animate .learn_btn {
+  opacity: 1;
+}
+page, page, #app {
+  width: 100%;
+  height: 100%;
+}
+/* 成功页 */
+.topic-success {
+  width: 100%;
+  height: 95%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.topic-success .success-icon {
+  display: inline-block;
+  width: 360rpx;
+  height: 360rpx;
+  padding: 80rpx;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100%;
+  text-align: center;
+  font-size: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -175rpx;
+  margin-top: -175rpx;
+  -webkit-transform: scale(0, 0);
+      -ms-transform: scale(0, 0);
+          transform: scale(0, 0);
+  -webkit-transition: all .2s;
+  -o-transition: all .2s;
+  transition: all .2s;
+}
+.topic-success .success-icon .img {
+  width: 200rpx;
+  height: 200rpx;
+  display: inline-block;
+}
+.topic-success .success-icon.s-animate {
+  -webkit-transform: scale(1, 1);
+      -ms-transform: scale(1, 1);
+          transform: scale(1, 1);
+}
+

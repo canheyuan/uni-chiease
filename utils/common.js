@@ -40,22 +40,18 @@ export default {
 		return result;
 	},
 	
-	//判断是否是测试(opt参数:test:true或false,source:app或h5,lan:语言)
-	pageLoadFn(option,cbOk){
+	//判断是否是测试(opt参数:test:true或false,source:app或h5,lan:语言,target:监听目标（APP,Page,默认Page）)
+	pageLoadFn(options,cbOk){
 		const app = getApp();
-		let opt = option ? option : null;
-		let opt_default = {
-			test:'',
-			source:'h5',
-			lan:'en'
-		};
-		opt = opt ? Object.assign(opt_default, opt) : opt_default
-
-		app.globalData.source = opt.source	//来源
-		app.globalData.isTest = opt.test?true:false
+		let opt = options ? options : null
+		app.globalData.source = opt.source?opt.source:(app.globalData.source?app.globalData.source:'h5')	//来源
+		app.globalData.lan = opt.lan?opt.lan:(app.globalData.lan?app.globalData.lan:'h5')	//语言
+		app.globalData.isTest = opt.test?true:(app.globalData.isTest?true:false)
+		
 		if(opt.test){
-			Shell.init();
+			Shell.init()
 			app.globalData.isTest = true
+			//app.globalData.sid = '8e91e1a3ce43e3bb042e0dc752e2dc58'
 			app.globalData.sid = '052bcfcd2f02226320c564311f6340c1'
 			app.globalData.lan = 'zh'
 			app.globalData.header = {
@@ -67,7 +63,7 @@ export default {
 		}
 		
 		//APP访问需要先获取header信息
-		if(opt.source == 'app'){
+		if(app.globalData.source == 'app'){
 			Shell.init();
 			Shell.getHttpHeaders((res)=>{
 				app.globalData.sid = res['5idea-sid']
@@ -75,7 +71,7 @@ export default {
 				app.globalData.header = res
 			})
 		}else{	//h5
-			app.globalData.lan = 'en'	//语言
+			//app.globalData.lan = 'en'	//语言
 		}
 		cbOk && cbOk()
 	},

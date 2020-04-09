@@ -1,0 +1,112 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+/*下载*/
+.download_mdl {
+  background: #fff;
+  text-align: center;
+  padding-bottom: 80rpx;
+}
+.download_mdl .down_head {
+    position: relative;
+    text-align: center;
+}
+.download_mdl .down_head .title {
+      position: absolute;
+      top: 50rpx;
+      left: 0;
+      z-index: 10;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+}
+.download_mdl .down_head .title .h3 {
+        font-size: 44rpx;
+        margin-bottom: 20rpx;
+        line-height: 52rpx;
+}
+.download_mdl .down_head .title .p {
+        font-size: 32rpx;
+        padding: 0 40rpx;
+}
+.download_mdl .down_head .head_img {
+      width: 100%;
+}
+.download_mdl .down_head .down_tit {
+      width: 366rpx;
+      height: 0.34rpx;
+      margin-bottom: 50rpx;
+}
+.download_mdl .down_btns {
+    text-align: center;
+}
+.download_mdl .down_btns .btn {
+      display: inline-block;
+      width: 222rpx;
+      height: 222rpx;
+}
+.download_mdl .down_btns .btn .img {
+        width: 100%;
+        height: 100%;
+}
+.download_mdl .down_btns2 .apply_btn {
+    display: inline-block;
+    width: 560rpx;
+    height: 120rpx;
+    color: #fff;
+    border-radius: 60rpx;
+    text-align: left;
+    padding: 20rpx 0;
+    margin-top: 40rpx;
+    background: -webkit-linear-gradient(left, #62d8ff, #35afff);
+    -webkit-box-shadow: 5rpx 0 18rpx rgba(53, 175, 255, 0.4);
+            box-shadow: 5rpx 0 18rpx rgba(53, 175, 255, 0.4);
+}
+.download_mdl .down_btns2 .apply_btn .h4 {
+      font-size: 44rpx;
+      line-height: 46rpx;
+}
+.download_mdl .down_btns2 .apply_btn .p {
+      font-size: 30rpx;
+      line-height: 34rpx;
+}
+.download_mdl .down_btns2 .apply_btn .icons {
+      float: left;
+      width: 70rpx;
+      height: 70rpx;
+      margin-left: 50rpx;
+      margin-right: 40rpx;
+      background-position: -70rpx -170rpx;
+}
+.download_mdl .down_btns2 .android_btn {
+    background: -webkit-linear-gradient(left, #ffc10a, #ffa100);
+    -webkit-box-shadow: 5rpx 0 18rpx rgba(247, 175, 0, 0.4);
+            box-shadow: 5rpx 0 18rpx rgba(247, 175, 0, 0.4);
+}
+.download_mdl .down_btns2 .android_btn .icons {
+      background-position: -140rpx -170rpx;
+}
+

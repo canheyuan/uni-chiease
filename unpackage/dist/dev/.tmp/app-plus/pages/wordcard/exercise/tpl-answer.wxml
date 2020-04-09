@@ -1,0 +1,1 @@
+<view class="{{['_div','topic-answer',animateClass]}}"><view class="txt _div"><view class="_h3">{{topicData.title}}</view><view class="_p">{{topicData.title_py}}</view></view><image src="{{topicData.imgUrl}}" alt class="_img"></image></view>

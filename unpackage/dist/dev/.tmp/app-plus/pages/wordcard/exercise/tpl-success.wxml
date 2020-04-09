@@ -1,0 +1,1 @@
+<view class="topic-success _div"><view class="{{['_div','success-icon',animateClass]}}"><image class="img" src="{{imgUrl+'/word/ico-success.png'}}" alt></image></view></view>

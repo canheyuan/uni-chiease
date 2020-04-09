@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "测试成绩分享",
+  "titleNView": false,
+  "usingComponents": {
+    "download-top": "/pages/share/tpl/download-top",
+    "download-bottom": "/pages/share/tpl/download-bottom"
+  }
+}

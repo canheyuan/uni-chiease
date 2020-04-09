@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "国际职场通用汉语",
+  "titleNView": false,
+  "usingComponents": {
+    "unit-index": "/pages/textbook/index/tpl-unit-index",
+    "word-explain": "/pages/textbook/index/tpl-word-explain",
+    "conversations": "/pages/textbook/index/tpl-conversations",
+    "notes": "/pages/textbook/index/tpl-notes",
+    "supplement": "/pages/textbook/index/tpl-supplement",
+    "situation": "/pages/textbook/index/tpl-situation",
+    "review": "/pages/textbook/index/tpl-review"
+  }
+}

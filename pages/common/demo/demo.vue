@@ -44,7 +44,6 @@
 		watch:{
 			watchText(newValue, oldValue){
 				console.log('watchText改变222',newValue,oldValue)
-				
 			}
 		},
 		methods: {

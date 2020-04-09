@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "单词趣味练习",
+  "titleNView": false,
+  "usingComponents": {
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "topic-choice": "/pages/wordcard/exercise/tpl-choice",
+    "topic-sort": "/pages/wordcard/exercise/tpl-sort",
+    "topic-judge": "/pages/wordcard/exercise/tpl-judge",
+    "topic-answer": "/pages/wordcard/exercise/tpl-answer",
+    "topic-success": "/pages/wordcard/exercise/tpl-success",
+    "topic-intro": "/pages/wordcard/exercise/tpl-intro"
+  }
+}

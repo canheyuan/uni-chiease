@@ -1,0 +1,1 @@
+<view class="page_list"><block wx:for="{{navList}}" wx:for-item="item" wx:for-index="index" wx:key="index"><navigator class="a" url="{{item.url}}">{{item.title}}</navigator></block></view>

@@ -1,0 +1,1 @@
+<view class="page_list"><view>{{watchText}}</view><view data-event-opts="{{[['tap',[['changeWatchFn',['$event']]]]]}}" style="padding:30rpx;" bindtap="__e">改变watchText</view></view>

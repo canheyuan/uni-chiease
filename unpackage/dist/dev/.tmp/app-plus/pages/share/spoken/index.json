@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "口语课分享页",
+  "titleNView": false,
+  "usingComponents": {
+    "download-top": "/pages/share/tpl/download-top",
+    "download-bottom": "/pages/share/tpl/download-bottom",
+    "record-list": "/pages/share/tpl/my-record-list"
+  }
+}

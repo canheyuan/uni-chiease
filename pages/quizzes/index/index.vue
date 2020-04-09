@@ -217,18 +217,7 @@ export default {
 		}
 	},
 	onLoad(options) {
-		if(!app.globalData.isFirst){	//首次App.vue有加载就不需要再加载
-			this.$common.pageLoadFn({
-				test:options.test,
-				lan :options.lan,
-				source:options.source
-			})
-			
-		}else{
-			app.globalData.isFirst = false
-		}
 		
-
 		//获取分享信息
 		var tjDataStr = uni.getStorageSync('tjData');
 		if(tjDataStr){
@@ -239,9 +228,13 @@ export default {
 				uniqueNums:''
 			}
 		}
+		//获取地址通用参数
+		this.$common.pageLoadFn(options,()=>{
+			this.getStatisticsData(this.tjData);
+			this.getSubjectFn()
+		})
 		
-		this.getStatisticsData(this.tjData);
-		this.getSubjectFn()
+		
 	},
 	onReady(){
 		this.StartPopFn('open')
@@ -249,9 +242,9 @@ export default {
 	
 	//监听返回按钮
 	onBackPress(e){
-		uni.showToast({
-			title:'测试题监听返回事件'
-		})
+		// uni.showToast({
+		// 	title:'测试题监听返回事件'
+		// })
 		console.log('测试题监听返回事件')
 		clearInterval(countTimer)
 		audioObj.pause()
@@ -448,6 +441,7 @@ export default {
 			countTimer = setInterval(()=>{
 				if(this.remainingTime<=0){
 					clearInterval(countTimer);
+					this.isAnswerIn = false;
 					this.skipNextSubject();	//超时进入下一题  
 				}else{
 					this.remainingTime -= 100;
@@ -472,6 +466,7 @@ export default {
 		
 		//选择答案(点击选项的索引)
 		subjectChoiceFn(cIndex){
+			if(!this.isAnswerIn){ return }
 			var subjectItem = this.subjectItem;
 			var subjectType = subjectItem.questionType;	//当前题目的类型
 			var currentCheck = subjectItem.options[cIndex].isChecked;
@@ -483,7 +478,7 @@ export default {
 			
 			//完型填空题，把选项添加到题目中
 			if(subjectType == 5 ){
-				var isFirst = true;	
+				var isFirst = true;
 				subjectItem.contentArr.forEach((item,index)=>{
 				   if(item.answerIndex==='' && isFirst){
 						item.answerIndex = cIndex;
@@ -545,7 +540,7 @@ export default {
 		
 		//跳转下一题
 		skipNextSubject(){
-			console.log('跳转下一题1111')
+
 			var _this = this;
 			this.getStatisticsFn(this.tjData.shareid,this.tjData.uniqueNums)
 			audioObj.pause();
@@ -553,7 +548,6 @@ export default {
 			console.log('subjectStore',subjectStore);
 			//判断是否最后一题
 			if(this.subjectIndex == 4){
-				console.log('跳转下一题333')
 				setTimeout(function(){
 					var level = parseInt(subjectStore);
 					uni.navigateTo({ url:`../result/index?level=${level}` })
@@ -561,7 +555,6 @@ export default {
 				},1000);
 				return;
 			}
-			console.log('跳转下一题222')
 			var subjectData = this.subjectData;
 			var subjectItem;
 			if(subjectStore < 2){
@@ -574,7 +567,6 @@ export default {
 			
 			this.subjectIsShow = false;
 			setTimeout(()=>{
-				console.log('跳转下一题444')
 				this.subjectIndex++;
 				this.subjectIsShow = true;
 				this.subjectItem = subjectItem;
@@ -584,7 +576,6 @@ export default {
 				clearInterval(countTimer);
 				this.remainingTime = 10000;
 				setTimeout(()=>{
-					console.log('跳转下一题555')
 					_this.subjectPlayAudio(this.subjectItem.audioList);	//播放音频
 				},1000);
 			},1000);

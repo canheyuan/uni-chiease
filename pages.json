@@ -17,12 +17,29 @@
 		{ "path": "pages/punch/guide/index", "style": { "navigationBarTitleText": "打卡指引", "app-plus": {"titleNView": false} } },
 		{ "path": "pages/quizzes/index/index", "style": { "navigationBarTitleText": "测试题", "app-plus": {"titleNView": false} } },
 		{ "path": "pages/quizzes/result/index", "style": { "navigationBarTitleText": "测试结果", "app-plus": {"titleNView": false} } },
-		{ "path": "pages/common/echarts-demo/echarts-demo", "style": { "navigationBarTitleText": "echarts demo", "app-plus": {"titleNView": false} } }
+		{ "path": "pages/common/echarts-demo/echarts-demo", "style": { "navigationBarTitleText": "echarts demo", "app-plus": {"titleNView": false} } },
+		{ "path": "pages/wordcard/index/index", "style": { "navigationBarTitleText": "词卡首页", "app-plus": {"titleNView": false} } },
+		{ "path": "pages/wordcard/exercise/index", "style": { "navigationBarTitleText": "单词趣味练习", "app-plus": {"titleNView": false} } },
+		{ "path": "pages/wordcard/exercise/index-draw", "style": { "navigationBarTitleText": "单词趣味练习", "app-plus": {"titleNView": false} } },
+		{ "path": "pages/wordcard/topic-test/index", "style": { "navigationBarTitleText": "单词趣味练习调试", "app-plus": {"titleNView": false} } },
+		{ "path": "pages/wordcard/result/index", "style": { "navigationBarTitleText": "测试结果", "app-plus": {"titleNView": false} } },
+		{ "path": "pages/wordcard/result/index-draw", "style": { "navigationBarTitleText": "测试结果", "app-plus": {"titleNView": false} } },
+		{ "path": "pages/wordcard/draw/index", "style": { "navigationBarTitleText": "抽奖", "app-plus": {"titleNView": false} } }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "CHIease",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"condition" : { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [
+			{
+				"name": "首页", //模式名称
+				"path": "/pages/index/index", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			}
+		]
 	}
 }

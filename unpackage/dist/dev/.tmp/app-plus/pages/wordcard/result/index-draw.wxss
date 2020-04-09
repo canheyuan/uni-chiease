@@ -1,0 +1,23 @@
+
+page,page,#app{width:100%; height:100%;}
+page{height:100%; width:100%;}
+/* 题目结果页 */
+.topic-result{width:100%; height:100%; background:url(../../static/img/word-result-bg.e0511119.png) no-repeat center center; background-size:100% 100%; text-align: center; color:#fff;}
+.topic-result .head-img{width:100%;}
+.topic-result .title .h3{display:inline-block; font-size:56rpx; line-height:80rpx; font-weight: bold;  position: relative; margin-bottom:40rpx;}
+.topic-result .title .h3 .span{display:inline-block; position: relative; z-index:9;}
+.topic-result .title .h3:after{content:''; display:inline-block; width:100%; height:22rpx; background:rgba(76, 171, 209, 1); position: absolute; bottom:0; left:0; z-index:0;}
+.topic-result .p{font-size:32rpx; line-height:50rpx; margin:0 50rpx 100rpx;}
+.share-btn{display:block; width:370rpx; height:110rpx; line-height:110rpx; text-align: center; border-radius:55rpx; background:#fff; font-size:36rpx; color:#307DBA; margin:0 auto;
+}
+.learn-more-btn{font-size:26rpx; color:#fff; line-height:44rpx; text-align: center; display: block;  padding:20rpx 0; margin-top:10rpx;}
+.download_pop_btn{background:#fff;}
+.download_pop_btn .tit{height:80rpx; line-height:80rpx; text-align: center; font-size:26rpx; color:#999999;}
+.download_pop_btn .a{display:block; height:100rpx; line-height:100rpx; color:#000000; font-size:36rpx; border-top:2rpx solid #e3e3e3;}
+.download_pop_btn .a .word-icons{width:50rpx; height:50rpx; margin-right:20rpx; vertical-align: middle; position:relative; top:-5rpx;}
+.download_pop_btn .a .ico_01{background-position: 0 -130rpx;}
+.download_pop_btn .a .ico_02{background-position: -50rpx -130rpx;}
+.download_pop_btn .a .ico_03{background-position: -100rpx -130rpx;}
+.download_pop_close{color:#1788d2; font-size:36rpx; text-align: center; background:#fff; height:100rpx; line-height:100rpx; margin-top:16rpx;}
+
+

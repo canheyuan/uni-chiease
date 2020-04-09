@@ -39,18 +39,10 @@
 			}
 		},
 		onLoad(options) {
-			//获取地址栏参数，并设置给globalData
-			if(!app.globalData.isFirst){	//首次App.vue有加载就不需要再加载
-				this.$common.pageLoadFn({
-					test:options.test,
-					lan :options.lan,
-					source:options.source
-				})
+			//获取地址通用参数
+			this.$common.pageLoadFn(options,()=>{
 				this.getDetailFn();
-			}else{
-				app.globalData.isFirst = false
-			}
-			this.getDetailFn();
+			})
 		},
 		onReady(){
 			//设置页面标题栏

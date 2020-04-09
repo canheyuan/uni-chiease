@@ -31,12 +31,15 @@
 				GP:"https://play.google.com/store/apps/details?id=com.fiveidea.chiease",	//谷歌
 				myapp:"https://sj.qq.com/myapp/detail.htm?apkName=com.fiveidea.chiease",	//应用宝
 			},
+			
+			nowWordTopicData:null,	//词卡当前题型信息
+			categoryType:null,	//词卡首页类型参数(beginner:零基础（默认），bridge：汉语桥)
 		},
 		
 		onLaunch: function(options) {
-			//console.log('App Launch',options)
+			console.log('App Launch',options)
 			this.$common.pageLoadFn({
-				test:options.query,
+				test:options.query.test,
 				lan :options.query.lan,
 				source:options.query.source
 			})
@@ -52,7 +55,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	/*每个页面公共css */
 	html, div, span, iframe, h1, h2, h4, h3, h5, h6, p, img, dd, dt, dl, nav, textarea, button, input, select, em, i, s, strong, ul, li { padding: 0; margin: 0; border: none; }
 	html * { -webkit-tap-highlight-color: rgba(0, 0, 0, 0);  box-sizing: border-box;}
@@ -79,6 +82,7 @@
 	.indent2{text-indent:2em;}
 	/* html,body{max-width:750px; margin:0 auto;} */
 	.icons{background:url(~@/static/images/icons.png) no-repeat; background-size:500upx 500upx; display: inline-block; vertical-align: middle;}
+	.word-icons{display:inline-block; background:url(~@/static/images/word/word-icons.png) no-repeat left top; background-size:300upx 300upx;}
 	.gray_bg{min-height:100%; background:#f7f7f7;}
 	
 	/*通用按钮*/

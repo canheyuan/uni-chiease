@@ -1,0 +1,1 @@
+<view><view class="echarts_box vue-ref" id="chart_example" data-ref="echartsBox"></view></view>

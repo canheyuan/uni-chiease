@@ -1,0 +1,2 @@
+setCssToHead(["@charset \x22UTF-8\x22;\n.",[1],"page_list .",[1],"a { display: block; height: ",[0,80],"; line-height: ",[0,80],"; border-bottom: ",[0,2]," solid #eee; padding: 0 ",[0,30],"; font-size: ",[0,32],"; color: #333; }\n",],undefined,{path:"./pages/index/index.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/index/index.wxml') } }));

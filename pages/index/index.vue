@@ -30,11 +30,20 @@
 					{title:'拼音表',url:'../static/pinyin-table/index'},
 					{title:'教材有声读物（ok）',url:'../textbook/index/index'},
 					{title:'demo',url:'../common/demo/demo'},
+					{title:'',url:''},
+					{title:'词卡首页',url:'../wordcard/index/index?test=1&source=app'},
+					{title:'词卡首页-汉语桥',url:'../wordcard/index/index?test=1&source=app&category=bridge'},
+					{title:'词卡练习',url:'../wordcard/exercise/index?test=1&source=app'},
+					{title:'词卡练习-优化',url:'../wordcard/topic-test/index?test=1&source=h5'},
+					{title:'词卡练习结果',url:'../wordcard/result/index?test=1&source=app'},
+					{title:'词卡练习（抽奖）',url:'../wordcard/exercise/index-draw?test=1&source=h5'},
+					{title:'词卡练习-抽奖页',url:'../wordcard/draw/index'},
 				]
 			}
 		},
-		onLoad() {
-			
+		onLoad(options) {
+			//获取地址通用参数
+			this.$common.pageLoadFn(options)
 		},
 		methods: {
 

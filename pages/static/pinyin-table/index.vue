@@ -2,7 +2,7 @@
 	<view v-if="pyData">
 		
 		<!--顶部-->
-		<image class="pinyin_tit" :src="imgUrl+'/pinyin_tit.png'" alt="">
+		<image class="pinyin_tit" :src="imgUrl+'/pinyin_tit.png'" alt="" />
 		<view class="pinyin_head" >
 			<view class="pinyin_list" :style="`width:${pyData.yunmuLen}upx; transform:translateX(-${pLeft}px)`">
 				<view 
@@ -113,7 +113,7 @@
 	
 	//创建音频实例
 	const pinyinAudio = uni.createInnerAudioContext();
-	pinyinAudio.autoplay = true;
+	pinyinAudio.autoplay = false;
 	// pinyinAudio.onPlay(()=>{
 	// 	console.log('拼音表开始播放')
 	// })
@@ -135,6 +135,8 @@
 			
 		},
 		methods:{
+
+			
 			scrollFn(event){
 				console.log('监听滚动',event)
 				var pLeft = event.detail.scrollLeft
@@ -154,7 +156,7 @@
 			},
 			//播放音频
 			playAudioFn(url){
-				var audioUrl = this.$common.pinyinUrl + '/voice/pinyin/' + url
+				var audioUrl = app.globalData.pinyinUrl + '/voice/pinyin/' + url
 				//console.log('当前播放的音频地址',audioUrl)
 				pinyinAudio.src = audioUrl;
 				pinyinAudio.play()
