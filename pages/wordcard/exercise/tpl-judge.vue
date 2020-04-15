@@ -1,25 +1,25 @@
 <template>
-    <div :class="['topic-box','topic-box03',{'box_animate':enterAnimate}]">
-        <div
+    <view :class="['topic-box','topic-box03',{'box_animate':enterAnimate}]">
+        <view
             id="quesBox" 
             :class="['question-box','animated',{'shake':shakeClass}]"
             :style="`transform:translate(${quesData.x}px,${quesData.y}px) ${drapStatus==1?'scale(.5,.5)':''};};`"
              @touchstart="touchstart('quesBox')" @touchmove="touchmove('quesBox')" @touchend="touchend('quesBox')"
         >
-            <img :src="topicData.otherImgUrl" alt="">
-            <h3>{{topicData.title}}</h3>
-            <p>{{topicData.title_py}}</p>
-        </div>
-        <div class="answer-box" id="btnBox">
-            <div :class="['btn',{'hover':topicData.options[0].hover}]" @click="chooseAnswerFn('false')" :id="topicData.options[0].id">
-                <i class="word-icons ico-mistake"></i>
-            </div>
-            <span class="txt">{{langData.wordTopic.orText[lan]}}</span>
-            <div :class="['btn',{'hover':topicData.options[1].hover}]" @click="chooseAnswerFn('true')" :id="topicData.options[1].id">
-                <i class="word-icons ico-correct" ></i>
-            </div>
-        </div>
-    </div>
+            <image class="img" :src="topicData.otherImgUrl" alt="">
+            <view class="h3">{{topicData.title}}</view>
+            <view class="p">{{topicData.title_py}}</view>
+        </view>
+        <view class="answer-box" id="btnBox">
+            <view :class="['btn',{'hover':topicData.options[0].hover}]" @click="chooseAnswerFn('false')" :id="topicData.options[0].id">
+                <view class="word-icons ico-mistake"></view>
+            </view>
+            <view class="txt">{{langData.wordTopic.orText[lan]}}</view>
+            <view :class="['btn',{'hover':topicData.options[1].hover}]" @click="chooseAnswerFn('true')" :id="topicData.options[1].id">
+                <view class="word-icons ico-correct" ></view>
+            </view>
+        </view>
+    </view>
 </template>
 
 

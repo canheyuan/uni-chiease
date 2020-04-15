@@ -35,13 +35,14 @@
 			<view class="prize_list" v-if="myPrizeList.length>0">
 				<view 
 					class="li" v-for="(item,index) in myPrizeList" :key="'prize'+index" 
-					@click="prizeDetailFn(item)"
+					@click="prizeDetailFn(item,index)"
 				>
 					<view class="num">{{index+1}}</view>
 					<view class="prize_img">
 						<image mode="widthFix" class="img" :src="imgUrl+item.img1"></image>
 					</view>
 					<view class="title">{{item.title}}</view>
+					<view class="p">{{item.isUse?'已使用':'未使用'}}</view>
 				</view>
 			</view>
 		</view>
@@ -70,7 +71,7 @@
 					<text class="text">中奖啦！
 					恭喜获得{{winPopData.title}}</text>
 					<image 
-						@click="popupShowFn('usePop',true)" mode="widthFix" 
+						@click="openUsePopFn" mode="widthFix" 
 						class="use_btn" :src="imgUrl+'/word/user_btn.png'"
 					></image>
 				</view>
@@ -85,8 +86,8 @@
 			<view class="use_pop">
 				<view class="title">{{winPopData.title}}</view>
 				<image mode="widthFix" class="good_img" :src="imgUrl+winPopData.img1"></image>
-				<text class="text">以下是示例文字：可以是优惠券的使用方法，或者一些说明文字。</text>
-				<view class="btn" @click="popupShowFn('usePop',false)">确定</view>
+				<text class="text">购买教材课程书籍时，出示该奖品界面，即可获得奖品</text>
+				<view class="btn" @click="usePrizeFn">确定使用</view>
 				<view class="close_btn" @click="popupShowFn('usePop',false)">
 					<image class="ico" :src="imgUrl+'/word/ico-close2.png'"></image>
 				</view>
@@ -131,6 +132,7 @@ export default {
 			},
 			drawIndex:0,	//当前选中哪个
 			myPrizeList:[],	//我的奖品列表
+			myPrizeIndex:0,	//当前操作的奖品列表索引
 			myPrizeShow:false,	//我的奖品是否显示
 			rulePopShow:false,	//活动规则弹窗是否显示
 			winPopData:{ img1:'/word/draw_img03.png', img2:'', title:'精品课程体验券' },	//中奖信息
@@ -143,15 +145,18 @@ export default {
 		})
 	},
 	mounted(){
-		//uni.setStorageSync('drawTimes',10)
+		uni.setStorageSync('drawTimes',10)
+		//uni.removeStorageSync('drawTimes')
+		//uni.clearStorageSync()
 		//获取缓存的抽奖次数
 		var drawTimes = uni.getStorageSync('drawTimes')?uni.getStorageSync('drawTimes'):0
+		console.log('drawTimes',drawTimes)
 		this.drawTimesFn(drawTimes)
 		
 		//获取缓存里的我的奖品列表
 		var myPrizeList = uni.getStorageSync('myPrizeList')?uni.getStorageSync('myPrizeList'):[]
-		console.log('myPrizeList222',myPrizeList)
 		this.myPrizeList = myPrizeList
+		console.log('this.myPrizeList',this.myPrizeList)
 	},
 	methods:{
 		
@@ -219,18 +224,23 @@ export default {
 						//当前奖品信息
 						var timestamp = new Date().getTime()	//当前时间
 						var nowWinPopData = _this.grid_info_arr[answerIndex]	
-						nowWinPopData['time'] = timestamp
+						nowWinPopData.time = timestamp
+						nowWinPopData.isUse = false
+						
+						//互转处理一下，不然变量下次改变渲染不了
+						var tempObj = JSON.stringify(nowWinPopData)
+						nowWinPopData = JSON.parse(tempObj);
+						
 						_this.winPopData = nowWinPopData	
-
+						
 						//当前奖品添加到我的奖品中
 						var myPrizeList = _this.myPrizeList
-						console.log('myPrizeList',myPrizeList)
 						myPrizeList.push(nowWinPopData)
 						_this.myPrizeList = myPrizeList
+						_this.myPrizeIndex = myPrizeList.length-1
 						uni.setStorageSync('myPrizeList',myPrizeList)
-						
-						//打开弹窗
-						setTimeout(()=>{
+
+						setTimeout(()=>{	//打开弹窗
 							_this.popupShowFn('winPop',true)
 						},1000)
 						
@@ -239,10 +249,25 @@ export default {
 			}
 		},
 		
-		//打开我的奖品
-		prizeDetailFn(prizeItem){
-			this.winPopData = prizeItem
+		openUsePopFn(){
+			this.popupShowFn('winPop',false)
 			this.popupShowFn('usePop',true)
+		},
+		
+		//打开我的奖品
+		prizeDetailFn(prizeItem,index){
+			this.winPopData = prizeItem
+			this.myPrizeIndex = index
+			this.popupShowFn('usePop',true)
+		},
+		
+		//确定使用奖品
+		usePrizeFn(){
+
+			this.myPrizeList[this.myPrizeIndex].isUse = true
+			console.log('this.myPrizeList',this.myPrizeList)
+			uni.setStorageSync('myPrizeList',this.myPrizeList)
+			this.popupShowFn('usePop',false)
 		},
 		
 		//popup显示、关闭中奖弹窗
@@ -340,7 +365,8 @@ page{background:#0e537b;}
 			border:2upx solid #619dc0; background:#1c6c9a;border-radius:20upx; float:left; margin-right:40upx;
 			.img{width:95%; height:auto; vertical-align: middle;}
 		}
-		.title{font-size:32upx; color:#fff; line-height:160upx;}
+		.title{font-size:32upx; color:#fff; line-height:80upx;}
+		.p{font-size:28upx; color:#fff; line-height:80upx;}
 	}
 }
 

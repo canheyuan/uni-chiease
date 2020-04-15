@@ -1,56 +1,55 @@
 <template>
-  <view class="topic-page" >
-          <!-- 看词选图:type=1 -->
-          <topic-choice @successFn='successFn' v-if='subjectStatus==1 && subjectActData.type==1' :topicData='subjectActData' :lan="lan"></topic-choice>
-  
-           <!-- 排序题:type=2 -->
-          <topic-sort @successFn='successFn' v-if='subjectStatus==1 && subjectActData.type==2' :topicData='subjectActData' :lan="lan"></topic-sort> 
-  
-          <!-- 判断题:type=3 -->
-          <topic-judge @successFn='successFn' v-if='subjectStatus==1 && subjectActData.type==3'  :topicData='subjectActData' :lan="lan"></topic-judge>
-          
-          <!-- 单词介绍 -->
-          <topic-intro @gotoTopic='gotoTopic' v-if="subjectStatus==0" :topicData='subjectActData' :lan="lan"></topic-intro>
-  
-          <!-- 成功 -->
-          <topic-success @afterSuccessFn="afterSuccessFn" v-if='subjectStatus==2' :lan="lan"></topic-success>
-  
-          <!-- 单词答案 -->
-          <topic-answer @answerResult="answerResult"  v-if="subjectStatus==3" :topicData='subjectActData' :lan="lan"></topic-answer>
-		  
-		  <!-- 进度条 -->
-		  <div class="topic-progress">
-			 <div class="progress-num">{{progressNum}}%</div>
-			 <div class="progress"><span :style="`width:${progressNum}%;`"></span></div>
-		  </div>
-  
-		<!-- 退出按钮 -->
-		<div class="close-page word-icons" @click='popupShowFn("outPopup",true)'></div> 
-		
-		<!-- 退出提示弹窗 -->
-		<uni-popup ref="outPopup" type="center">
-			<div class="close-page-tip-pop">
-				<span class="close" @click='popupShowFn("outPopup",false)'><img :src="imgUrl+'/word/ico-close2.png'" alt=""></span>
-				<h3 class="title">{{langData.wordTopic.outTitle[lan]}}</h3>
-				<p>{{langData.wordTopic.outTip[lan]}}</p>
-				<a class="pop_btn01"  @click='popupShowFn("outPopup",false)'>{{langData.wordTopic.continueBtn[lan]}}</a>
-				<a class="pop_btn02" @click="resetSubject" >{{langData.wordTopic.resetBtn[lan]}}</a>
-				<a class="pop_btn03" @click='gobackFn'>{{langData.wordTopic.outBtn[lan]}}</a>
-			</div>
-		</uni-popup>
-		  
-		  <!-- 所以题目完成提示弹窗 -->
-		  <uni-popup ref="finishPopup" type="center">
-			  <div class="close-page-tip-pop">
-				  <h3 class="title">{{langData.wordTopic.finishTitle[lan]}}</h3>
-				  <p>{{langData.wordTopic.finishTip[lan]}}</p>
-				  <a class="pop_btn01"  @click='resetSubject'>{{langData.wordTopic.continueBtn[lan]}}</a>
-				  <a class="pop_btn02" @click="gobackFn" >{{langData.wordTopic.outBtn2[lan]}}</a>
-			  </div>
-		  </uni-popup>
-		  <!-- <audio ref="audioObj" :src="subjectActData?subjectActData.voiceUrl:''"></audio> -->
-		  
+<view class="topic-page" >
+	<!-- 看词选图:type=1 -->
+	<topic-choice @successFn='successFn' v-if='subjectStatus==1 && subjectActData.type==1' :topicData='subjectActData' :lan="lan"></topic-choice>
+
+	<!-- 排序题:type=2 -->
+	<topic-sort @successFn='successFn' v-if='subjectStatus==1 && subjectActData.type==2' :topicData='subjectActData' :lan="lan"></topic-sort> 
+
+	<!-- 判断题:type=3 -->
+	<topic-judge @successFn='successFn' v-if='subjectStatus==1 && subjectActData.type==3'  :topicData='subjectActData' :lan="lan"></topic-judge>
+
+	<!-- 单词介绍 -->
+	<topic-intro @gotoTopic='gotoTopic' v-if="subjectStatus==0" :topicData='subjectActData' :lan="lan"></topic-intro>
+
+	<!-- 成功 -->
+	<topic-success @afterSuccessFn="afterSuccessFn" v-if='subjectStatus==2' :lan="lan"></topic-success>
+
+	<!-- 单词答案 -->
+	<topic-answer @answerResult="answerResult"  v-if="subjectStatus==3" :topicData='subjectActData' :lan="lan"></topic-answer>
+
+	<!-- 进度条 -->
+	<view class="topic-progress">
+		<view class="progress-num">{{progressNum}}%</view>
+		<view class="progress"><view class="span" :style="`width:${progressNum}%;`"></view></view>
 	</view>
+
+	<!-- 退出按钮 -->
+	<view class="close-page word-icons" @click='popupShowFn("outPopup",true)'></view> 
+
+	<!-- 退出提示弹窗 -->
+	<uni-popup ref="outPopup" type="center">
+		<view class="close-page-tip-pop">
+			<view class="close" @click='popupShowFn("outPopup",false)'><image class="img" :src="imgUrl+'/word/ico-close2.png'" alt=""></view>
+			<view class="title">{{langData.wordTopic.outTitle[lan]}}</view>
+			<view class="p">{{langData.wordTopic.outTip[lan]}}</view>
+			<view class="pop_btn01"  @click='popupShowFn("outPopup",false)'>{{langData.wordTopic.continueBtn[lan]}}</view>
+			<view class="pop_btn02" @click="resetSubject" >{{langData.wordTopic.resetBtn[lan]}}</view>
+			<view class="pop_btn03" @click='gobackFn'>{{langData.wordTopic.outBtn[lan]}}</view>
+		</view>
+	</uni-popup>
+
+	<!-- 所以题目完成提示弹窗 -->
+	<uni-popup ref="finishPopup" type="center">
+		<view class="close-page-tip-pop">
+			<view class="title">{{langData.wordTopic.finishTitle[lan]}}</view>
+			<view class="p">{{langData.wordTopic.finishTip[lan]}}</view>
+			<view class="pop_btn01"  @click='resetSubject'>{{langData.wordTopic.continueBtn[lan]}}</view>
+			<view class="pop_btn02" @click="gobackFn" >{{langData.wordTopic.outBtn2[lan]}}</view>
+		</view>
+	</uni-popup>
+
+</view>
 </template>
 
 <script>
@@ -66,7 +65,6 @@ import topicSuccess from './tpl-success'
 
 //创建音频实例
 const audioObj = uni.createInnerAudioContext();
-//audioObj.src = 'https://test.5ideachinese.com/res/voice/2019/08/a3cbd505c7734816d3787c227985ca08.mp3'
 audioObj.autoplay = false;
 export default {
     components: {
@@ -87,10 +85,6 @@ export default {
 			listId:'',	//地址传来的listId
 			isOutPopShow : false, //退出提示弹窗是否显示
 			isFinishPopShow:false,  //题目已全部完成提示弹窗
-			isTopicShow:false,  //当前显示做题组件
-			isSuccessShow:false,    //是否显示成功界面
-			isAnswerShow:false, //是否显示答案界面
-			isIntroShow:false,      //单词介绍页是否显示 
 
 			//progressNum:0,      //做题进度
 			//记录做过的题目
@@ -124,7 +118,6 @@ export default {
 	
 	//节点完成后执行
 	mounted(){
-		
 		//使用事件监听方式捕捉事件
 		audioObj.onEnded(()=>{
 			// console.log('this.subjectStatus',this.subjectStatus)

@@ -1,14 +1,13 @@
 <template>
-   <div :class="['topic-box','topic-box01',{'box_animate':enterAnimate,'static':handTipShow}]">
-        <ul class="topic-answer-list01">
-            <li 
-                v-for="(item,index) in topicData.options" :key="index"
-                :id="item.id" 
-                :class="{'overlap':item.hover}"
+   <view :class="['topic-box','topic-box01',{'box_animate':enterAnimate,'static':handTipShow}]">
+        <view class="topic-answer-list01">
+            <view 
+                v-for="(item,index) in topicData.options" :key="index" :id="item.id" 
+                :class="['li',{'overlap':item.hover}]"
                 @click="choiceFn(item.answer)"
-            ><img :src="item.imgUrl" alt=""></li>
-        </ul>
-        <div 
+            ><image class="img" :src="item.imgUrl" alt=""></view>
+        </view>
+        <view 
             :class="['topic-question','animated',{'no_drap':drapStatus==0,'shake':answerResultStatus==1}]" 
             :style="`
                 transform:translate(${quesData.x}px,${quesData.y}px) ${drapStatus==1?'scale(.7,.7)':''};   
@@ -18,11 +17,11 @@
             @touchend="touchend('topic01Ques')"
             id="topic01Ques"
         >
-            <h3>{{topicData.title}}</h3>
-            <p>{{topicData.title_py}}</p>
-        </div>
-        <i class="ico-hand"></i>
-    </div>
+            <view class="h3">{{topicData.title}}</view>
+            <view class="p">{{topicData.title_py}}</view>
+        </view>
+        <view class="ico-hand"></view>
+    </view>
 </template>
 
 <script>

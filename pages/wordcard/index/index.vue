@@ -32,6 +32,7 @@
                     <view class="btm">{{item.nameMulti[lan]}}</view>
                 </view>
            </view>
+		   <view class="more_tip" style="clear:both;"><view class="txt">{{isLastList?'没有更多了':'上拉加载更多'}}</view></view>
        </view>
    </view>
 </template>
@@ -49,6 +50,8 @@ export default {
 			
 			shareId:'',
             wordList:[],
+			pageNum:1,	//APP接口当前页数
+			isLastList:false,	//是否APP接口最后一页了
             unfinishedData:null
 		}
     },
@@ -68,26 +71,26 @@ export default {
     mounted(){
 		
     },
+	
+	//上拉刷新
+	onReachBottom(){
+		if(app.globalData.source == 'app' && !this.isLastList){	
+			this.getAPPWordList(this.pageNum) 
+		}
+	},
     
     methods:{
 		
 		onloadFn(){
 			if(app.globalData.source == 'app'){	//判断是app还是H5打开
-			    //设置页面标题栏
-			    var param = {
+			    var param = {	//设置页面标题栏
 			        title: this.langData.wordIndex.title[this.lan]
 			    }
-			    if(!app.globalData.test){
-			        Shell.setPageTitle(JSON.stringify(param));
-			    }
-			    if(app.globalData.sid){
-			        this.getAPPWordList();
-			    }
+			    if(!app.globalData.test){ Shell.setPageTitle(JSON.stringify(param)); }
+			    if(app.globalData.sid){ this.getAPPWordList(this.pageNum) }
 			}else{
 			    this.getH5WordList();
-			    if(this.shareId){
-			        this.getShareDetail(this.shareId);
-			    }
+			    if(this.shareId){ this.getShareDetail(this.shareId) }
 			}
 		},
 		
@@ -116,38 +119,38 @@ export default {
         },
 
         //APP获取首页词卡列表
-        getAPPWordList(){
-			console.log('APP获取首页词卡列表')
+        getAPPWordList(pageNum,isReach){
             var _this = this;
-
+			if(isReach){_this.pageNum = 1}
 			//category类型：(beginner:零基础（默认），bridge：汉语桥)
-            var category = app.globalData.categoryType
+            var categoryText = app.globalData.categoryType?('&category='+app.globalData.categoryType):''
 			_this.$http({
-				url:`/api/lexiconList/getLexiconList${category?('?category='+category):''}`,
-				data:{
-					pageNum:1,
-					pageSize:40,
-				},
+				url:`/api/lexiconList/getLexiconList?pageNum=${pageNum}&pageSize=10${categoryText}`,
 				method:'post',
 				success:(res)=>{
+					if(!res.data){
+						console.log('res.data')
+						_this.isLastList = true
+						return
+					}
 					var list = res.data;
-					list.forEach((item,index)=>{
+					var wordList = _this.wordList
+					wordList = isReach?list:wordList.concat(list)
+					wordList.forEach((item,index)=>{
 					    //masteryNum：已完成题目，subitem：题目总数
 					    item.percent = (item.subitem==0?0:parseInt(100*item.masteryNum/item.subitem)) + '%';
-					    
 					    item.bgClass = 'bg0' + (index%6+1);
-					    //item.link = 'topicIndex/' + item.listId;
-					
 					    if(item.masteryNum < item.subitem && !_this.unfinishedData){
 					        _this.unfinishedData = item;
-					        //console.log('unfinishedData',_this.unfinishedData)
 					    }
 					})
+					
 					//若全部完成，头部就显示第一个
 					if(!_this.unfinishedData){
-					    _this.unfinishedData = list[0]
+					    _this.unfinishedData = wordList[0]
 					}
-					_this.wordList = list;
+					_this.wordList = wordList;
+					this.pageNum++
 				}
 			})
         },
@@ -167,6 +170,7 @@ export default {
                     _this.unfinishedData = item
                 }
             })
+			_this.isLastList = true
             _this.wordList = list;
         }
     }

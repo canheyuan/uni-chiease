@@ -88,4 +88,10 @@
 	/*通用按钮*/
 	.yellow_btn{height:100upx; line-height:100upx; display:block; border-radius:50upx; color:#fff; background:#ffbc08; margin:0 80upx; box-shadow: 8upx 0 28upx rgba(247,157,0,.5); font-size:34upx;  background:-moz-linear-gradient(left,#ffc10a,#ffa100); background:-webkit-gradient(linear, 0% 0%,100% 0%,from(#ffc10a), to(#ffa100));/*谷歌*/}
 	.yellow_btn:active{ background:-moz-linear-gradient(left,#ffa100,#ffc10a); background:-webkit-gradient(linear, 0% 0%,100% 0%,from(#ffa100), to(#ffc10a));/*谷歌*/}
+	
+	/* 加载更多提示文字 */
+	.more_tip{text-align: center; height:40upx; margin:30upx 0;}
+	.more_tip .txt{ text-align: center; font-size:28upx; color:#777777; line-height:40upx; height:40upx; }
+	.more_tip .txt::before{content:'————'; color:#d7d7d7; display:inline-block; font-size:24upx; line-height:40upx; margin-right:30upx;}
+	.more_tip .txt::after{content:'————'; color:#d7d7d7; display:inline-block; font-size:24upx; line-height:40upx; margin-left:30upx; vertical-align: middle;}
 </style>

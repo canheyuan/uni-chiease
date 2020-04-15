@@ -1,22 +1,22 @@
 <template>
-    <div :class="['topic-box','topic-box02',{'box_animate':enterAnimate}]">
-        <img class="ques-img" :src="topicData.imgUrl" alt="">
-        <ul class="topic-question-list02" ref="quesListBox">
-            <li 
+    <view :class="['topic-box','topic-box02',{'box_animate':enterAnimate}]">
+        <image class="ques-img" :src="topicData.imgUrl" alt="" />
+        <view class="topic-question-list02" ref="quesListBox">
+            <view 
                 v-for="(item,index) in topicData.options" :key="`topic${item.answer}`"
-                v-show="item.show"  :class="{'hover':item.hover}" :id="`topic_${item.answer}`"
+                v-show="item.show"  :class="['li',{'hover':item.hover}]" :id="`topic_${item.answer}`"
                 :style="`left:${item.left}; top:${item.top}; transform:translate(${item.x}px,${item.y}px); `" 
                 @touchstart="touchstart(`topic_${item.answer}`,index)" 
                 @touchmove="touchmove(`topic_${item.answer}`,index)"
                 @touchend="touchend(`topic_${item.answer}`,index)"
                 @click="choiceFn(index)"
-            ><span>{{item.text}}</span></li>
-        </ul>
-        <ul :class="['topic-answer-list02','animated',{'shake':answerResultStatus==1,'overlap':isOverlapStatus}]" id="answerBox">
-            <li v-for='(item) in answerDefaultList' :key="`answer${item}`"
-            >{{answerList[item]}}</li>
-        </ul>
-    </div>
+            ><view class="span">{{item.text}}</view></view>
+        </view>
+        <view :class="['topic-answer-list02','animated',{'shake':answerResultStatus==1,'overlap':isOverlapStatus}]" id="answerBox">
+            <view class="li" v-for='(item) in answerDefaultList' :key="`answer${item}`"
+            >{{answerList[item]}}</view>
+        </view>
+    </view>
 </template>
 
 

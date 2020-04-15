@@ -2,6 +2,14 @@
 	<view class="page_list">
 		<view>{{watchText}}</view>
 		<view style="padding:30upx;" @click="changeWatchFn">改变watchText</view>
+		
+		<view @click="aaa" style="margin-top:100upx;">改变变量111</view>
+		<view>navItem:{{navItem.title}}</view>
+		<view>navItem:{{navItem.title2}}</view>
+		<view>navItem:{{navItem.title3}}</view>
+		<view>navList:{{navList[0].title}}</view>
+		<view>navList:{{navList[0].title2}}</view>
+		<view @click="bbb" style="margin-top:100upx;">改变变量222</view>
 		<!-- <navigator 
 			v-for="(item,index) in navList" :key="index"
 			:url="item.url" class="a" 
@@ -32,7 +40,8 @@
 					{title:'',url:''},
 					{title:'拼音表',url:'../static/pinyin-table/index'},
 					{title:'教材有声读物（ok）',url:'../textbook/index/index'},
-				]
+				],
+				navItem:{}
 			}
 		},
 		onLoad() {
@@ -40,6 +49,8 @@
 			// this.$watch('watchText', function (newValue, oldValue) {
 			//    console.log('watchText改变',newValue,oldValue)
 			// })
+			
+			
 		},
 		watch:{
 			watchText(newValue, oldValue){
@@ -47,8 +58,25 @@
 			}
 		},
 		methods: {
+			
 			changeWatchFn(){
 				this.watchText = '456'
+			},
+			
+			aaa(){
+				this.navItem = {title2:'bbb'}
+				// var navListObj = this.navList
+				// navListObj[0].title2 = 'aaa'
+				// this.navItem = navListObj[0]
+				// console.log('navListObj',this.navItem)
+			},
+			
+			bbb(){
+				console.log('bbbb')
+				// var navItem = this.navItem
+				this.navItem.title2 = 'ccc'
+				// navItem.title3 = 'ccc'
+				//this.navItem = {title2:'bbb'}
 			}
 		}
 	}

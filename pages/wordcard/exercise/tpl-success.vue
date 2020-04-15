@@ -1,9 +1,9 @@
 <template>
-   <div class="topic-success">
-       <div :class="['success-icon',animateClass]">
+   <view class="topic-success">
+       <view :class="['success-icon',animateClass]">
            <image class="img" :src="imgUrl + '/word/ico-success.png'" alt="">
-       </div>
-   </div>
+       </view>
+   </view>
 </template>
 
 
