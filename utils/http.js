@@ -4,14 +4,6 @@ var http = (option) => {
 	const app = getApp();
 	let apiUrl = app.globalData.apiUrl	//接口域名
 	let commonHeader = app.globalData.header	//app传来的头部信息
-	//console.log('commonHeader',app.globalData)
-	// if(app.globalData.source == 'app' && !commonHeader){
-	// 	app.globalData.getHeader((res)=>{
-	// 		app.globalData.header = res
-	// 	})
-	// }else if(!commonHeader){
-	// 	commonHeader = {}
-	// }
 	let opt = option ? option : null;
 	//console.log('headerDataheaderData',headerData)
 	let opt_default = {

@@ -30,6 +30,8 @@
 					{title:'拼音表',url:'../static/pinyin-table/index'},
 					{title:'教材有声读物（ok）',url:'../textbook/index/index'},
 					{title:'demo',url:'../common/demo/demo'},
+					{title:'404',url:'../common/404/index'},
+					{title:'小游戏-小李飞刀',url:'../game/fly-cutter/index'},
 					{title:'',url:''},
 					{title:'词卡首页-H5',url:'../wordcard/index/index?source=h5'},
 					{title:'词卡首页-APP基础课',url:'../wordcard/index/index?test=1&source=app'},

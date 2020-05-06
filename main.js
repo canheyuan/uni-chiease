@@ -11,8 +11,13 @@ Vue.prototype.$common = commomConfig
 import commomHttp from 'utils/http.js'
 Vue.prototype.$http = commomHttp
 
-import uCharts from 'plugins/stan-ucharts/u-charts/u-charts.js'; //可以优化放全局 uCharts ==>使用全局
+//可以优化放全局 uCharts ==>使用全局
+import uCharts from 'plugins/stan-ucharts/u-charts/u-charts.js'; 
 Vue.prototype.$uCharts = uCharts
+
+//通用404
+import noData from './components/noData/noData.vue'
+Vue.component('noData',noData)
 
 App.mpType = 'app'
 const app = new Vue({

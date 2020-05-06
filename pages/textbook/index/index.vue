@@ -106,7 +106,7 @@
 				audioAction: {
 					method: 'play'	//pause/play
 				},
-				audioUrl:'https://test.5ideachinese.com/profile/frontend_v2/static/mp3/',	//音频前缀
+				audioUrl:'https://test.5ideachinese.com/profile/uni-chiease/static/mp3/',	//音频前缀
 			}
 		},
 		onLoad(options) {
