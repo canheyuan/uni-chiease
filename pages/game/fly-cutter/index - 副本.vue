@@ -21,8 +21,8 @@
 		</view>
 		<!-- <view style="position:fixed; top:100upx; left:-10000upx; z-index:100;">
 			<canvas canvas-id="createImg"  type="2d"  :style="`width:${createImgData.w}px; height:${createImgData.h}px; background:#eee;`"></canvas>
-		</view> -->
-		<!-- <view style="position:fixed; top:100upx; left:0; z-index:100;">
+		</view>
+		<view style="position:fixed; top:100upx; left:0; z-index:100;">
 			<image :src="canvasImg2" style="width:300px; height:300px;"></image>
 		</view> -->
 	</view>
@@ -65,7 +65,7 @@
 				
 				knife2:	{ x:0, y:0, w:20, h:40 },	//小刀2
 				knife:	{ x:0, y:0, w:20, h:80, dir:0, speed:5,  rotate:0,},	//小刀
-				circle:	{ x:0, y:0, w:333,h:163,dir:0, speed:5 , img:''},	//板砖
+				circle:	{ x:0, y:0, w:333,h:163,dir:0, speed:5 },	//板砖
 				
 				canvasImg2:'',
 				createImgData:{
@@ -106,7 +106,6 @@
 			* @param {number} imgType 设置生成图片的大小：0设置生成的图片大小是以图片设置的css大小为准，1设置生成的图片大小是以图片分辨率为准，默认值为0
 			* @return {string} return base64 png图片字符串
 			*/
-			//生成图片链接
 			createCircleImg(img,imgType){
 				var _this = this
 				var type = imgType || 0;
@@ -122,7 +121,7 @@
 				this.createImgData.w = diameter
 				this.createImgData.h = diameter
 				uni.downloadFile({
-				    url: img.path,
+				    url: `http://192.168.2.10:8000/profile/uni-chiease/static/images/game/head.jpg`,
 				    success: function (res) {
 						contex.save();
 						contex.beginPath();
@@ -141,7 +140,8 @@
 								canvasId: 'createImg',
 								success: function(res) {
 								    // 在H5平台下，tempFilePath 为 base64
-									_this.circle.img = res.tempFilePath
+								    console.log('111',res)
+									_this.canvasImg2 = res.tempFilePath
 								} 
 							})
 						});
@@ -157,9 +157,16 @@
 			
 			//首次加载
 			beginGameFn(){
-				this.randomCircle(1)
 				this.drawKnife(true)
+				this.randomCircle(1)
 				this.drawCanvas()
+				
+				// var circle = this.circle
+				// ctx.save();
+				// ctx.arc(circle.x+circle.w/2,circle.y+circle.h*.4,circle.w*.6,0,2 * Math.PI); //画出圆
+				// ctx.clip(); //裁剪上面的圆形
+				// ctx.drawImage(imgUrl + '/game/head.jpg',circle.x+circle.w*.2, circle.y+circle.h*.4, circle.w*.6, circle.h*.6)
+				// ctx.restore(); // 还原状态
 			},
 			
 			//点击事件
@@ -192,8 +199,8 @@
 								this.bestScore = this.sumScore
 							}
 							this.sumScore = 0
-							this.randomCircle(1)
 							this.drawKnife(true)
+							this.randomCircle(1)
 							window.requestAnimationFrame(this.knifeRun)
 						}
 						break;
@@ -205,12 +212,17 @@
 				if(isDf){
 					this.knife.x = w*.5-20*s
 					this.knife.y = h*.7
-				}else{
-					var knife = this.knife
-					this.drawRotate(knife.x + knife.w/2, knife.y + knife.h/2, knife.rotate,()=>{
-						ctx.drawImage(this.imgUrl + '/game/knife-1.png', knife.x, knife.y, knife.w, knife.h)
-					})
 				}
+				var knife = this.knife
+				
+				ctx.translate(knife.x + knife.w/2, knife.y + knife.h/2)
+				ctx.rotate( knife.rotate* Math.PI / 180)
+				ctx.translate(-(knife.x + knife.w/2), -(knife.y + knife.h/2))
+				ctx.drawImage(this.imgUrl + '/game/knife-1.png', knife.x, knife.y, knife.w, knife.h)
+				
+				// this.drawRotate(knife.x + knife.w/2, knife.y + knife.h/2, knife.rotate,()=>{
+				// 	ctx.drawImage(this.imgUrl + '/game/knife-1.png', knife.x, knife.y, knife.w, knife.h)
+				// })
 			},
 			//绘画短刀元素
 			drawKnife2(){
@@ -254,7 +266,7 @@
 			//绘画整个画布
 			drawCanvas(){
 				//每次绘画前先清除画布
-				ctx.clearRect(0,0,w,h)
+				ctx.clearRect(0,0,w,h);	
 				
 				//顶部分数
 				this.drawFont(this.sumScore, w*0.5, 40, 40,'#ffffff','center')
@@ -287,7 +299,7 @@
 						this.drawCircle()	//板砖
 						this.drawKnife()	//小刀1
 				}
-				ctx.draw()
+				ctx.draw(true)
 			},
 			
 			
@@ -354,8 +366,8 @@
 									this.elAlpha = 1
 									this.knife.dir = 1
 									this.knife.rotate = 0
-									this.randomCircle()
 									this.drawKnife(true)
+									this.randomCircle()
 									if(this.knifeTimes>5){	//第五次后才有木板移动
 										var knifeTimes = this.knifeTimes<80?this.knifeTimes:80
 										this.circle.dir = parseInt(Math.random()*100) < knifeTimes?2:0
@@ -409,7 +421,7 @@
 				ctx.setGlobalAlpha(endAlpha)
 			},
 			
-			//元素旋转(元素应该在绘画最底部，而且draw()不能为true)
+			//元素旋转
 			drawRotate(x,y,rotateDeg,cbOk){
 				ctx.translate(x, y)
 				ctx.rotate( rotateDeg* Math.PI / 180)
