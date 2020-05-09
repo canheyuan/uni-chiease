@@ -25,7 +25,8 @@
 		{ "path": "pages/wordcard/result/index-draw", "style": { "navigationBarTitleText": "测试结果", "app-plus": {"titleNView": false} } },
 		{ "path": "pages/common/404/index", "style": { "navigationBarTitleText": "404", "app-plus": {"titleNView": false} } },
 		{ "path": "pages/wordcard/draw/index", "style": { "navigationBarTitleText": "抽奖", "app-plus": {"titleNView": false} } },
-		{ "path": "pages/game/fly-cutter/index", "style": { "navigationBarTitleText": "小李飞刀", "app-plus": {"titleNView": false} } }
+		{ "path": "pages/game/fly-cutter/index", "style": { "navigationBarTitleText": "小李飞刀", "app-plus": {"titleNView": false} } },
+		{ "path": "pages/game/fly-cutter/index2", "style": { "navigationBarTitleText": "小李飞刀2", "app-plus": {"titleNView": false} } }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

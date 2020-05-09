@@ -1,16 +1,11 @@
 <template>
 	<view class="game_box">
+		
 		<!-- 加载显示 -->
 		<view class="begin_box" v-if="false">
 			<view class="load_txt">Loading......0% </view>
 		</view>
 		
-		<!-- 开始前提示 -->
-		<view class="begin_tip" v-show="gameStatus==0" >
-			<view class="des">点击屏幕发射飞刀击中木板</view>
-			<view class="btn" style="bottom:480upx" v-if="sumScore==0" @click="chooseImgFn">上传解恨对象</view>
-			<view class="btn"  @click="startGameFn">开始游戏</view>
-		</view>
 		
 		<!-- 游戏画布 -->
 		<view class="game_canvas_box">
@@ -19,15 +14,41 @@
 				canvas-id="gameCanvas" disable-scroll="true"
 				@touchstart="touchstartFn"
 			></canvas>
+			<!-- 顶部分数 -->
+			<view class="game_top">
+				<view class="num1"><image class="img" :src="imgUrl+'/game/king.png'"></image>{{bestScore}}</view>
+				<view class="num2">{{sumScore}}</view>
+				<view class="change_btn" v-if="sumScore==0" @click="chooseImgFn">替换图片</view>
+			</view>
 		</view>
 		
-		<view v-if="sumScore==0" class="choose_img" @click="chooseImgFn">更换图片</view>
+		<!-- 开始游戏 -->
+		<uni-popup ref="gameStart" :animation="false" type="center">
+			<view class="game_start">
+				<text class="des">点击屏幕发射飞刀击中木板
+				越击中中心，获得分数越高</text>
+				<view class="btn" style="margin-bottom:60upx;" v-if="sumScore==0" @click="chooseImgFn">上传解恨对象</view>
+				<view class="btn"  @click="startGameFn">开始游戏</view>
+			</view>
+		</uni-popup>
+		
+		<!-- 游戏结束 -->
+		<uni-popup ref="gameOver" :animation="false" type="center">
+			<view class="game_over_box">
+				<image v-show="bestScore<sumScore" class="new_img" mode="widthFix" :src="imgUrl + '/game/highest-4.png'"></image>
+				<view v-show="bestScore>=sumScore" class="tit">游戏结束 </view>
+				<view class="des">你在小李飞刀中得了 {{sumScore}} 分，真是太棒了，再练练就能得心应手了</view>
+				<view class="btn" @click="resetGameFn">再试一次</view>
+			</view>			
+		</uni-popup>
+
+		<!-- 图片生成 -->
 		<view style="position:fixed; top:100upx; left:-10000upx; z-index:100;">
-			<canvas canvas-id="createImg"  type="2d"  :style="`width:${createImgData.w}px; height:${createImgData.h}px; background:#eee;`"></canvas>
+			<canvas 
+				canvas-id="createImg"  type="2d"  
+				:style="`width:${createImgData.w}px; height:${createImgData.h}px; background:#eee;`"
+			></canvas>
 		</view>
-		<!-- <view style="position:fixed; top:500upx; left:0; z-index:100;">
-			<image :src="circle.img" style="width:300px; height:300px;"></image>
-		</view> -->
 	</view>
 </template>
 <script>
@@ -50,8 +71,11 @@
 	audio03.src = app.globalData.apiUrl + '/static/media/game/shibai.mp3'
 	audio04.src = app.globalData.apiUrl + '/static/media/game/su1.mp3'
 	audio05.src = app.globalData.apiUrl + '/static/media/game/hit.mp3'
+	
+	import {uniPopup} from '@dcloudio/uni-ui'	//导入uni-ui
 	//pinyinAudio.autoplay = false;
 	export default{
+		components: {uniPopup},
 		data (){
 			return {
 				imgUrl:app.globalData.imgUrl,
@@ -90,6 +114,9 @@
 			ctx = uni.createCanvasContext('gameCanvas',this)
 			this.bestScore = uni.getStorageSync('flyGameBestScore') || 0
 			this.beginGameFn()
+			
+			this.$refs.gameStart.open()
+			//this.$refs.gameOver.open()
 		},
 		
 		methods:{
@@ -98,6 +125,7 @@
 			//点击开始游戏
 			startGameFn(){
 				this.gameStatus = 1
+				this.$refs.gameStart.close()
 			},
 			
 			//首次加载
@@ -124,25 +152,45 @@
 					case 3:	//击中木板
 						
 						break;
-					case 4:	//重新开始
-						if(this.elAlpha < 0){
-							this.knifeTimes = 0
-							this.isStop = false
-							this.gameStatus = 2
-							this.elAlpha = 1
-							this.firstPlay = true
-							this.knife.dir = 0
-							this.knife.rotate = 0
-							if(this.sumScore > this.bestScore){
-								this.bestScore = this.sumScore
-							}
-							this.sumScore = 0
-							this.randomCircle(1)
-							this.drawKnife(true)
-							window.requestAnimationFrame(this.knifeRun)
-						}
-						break;
+					// case 4:	//重新开始
+					// 	if(this.elAlpha < 0){
+					// 		this.knifeTimes = 0
+					// 		this.isStop = false
+					// 		this.gameStatus = 2
+					// 		this.elAlpha = 1
+					// 		this.firstPlay = true
+					// 		this.knife.dir = 0
+					// 		this.knife.rotate = 0
+					// 		if(this.sumScore > this.bestScore){
+					// 			this.bestScore = this.sumScore
+					// 		}
+					// 		this.sumScore = 0
+					// 		this.randomCircle(1)
+					// 		this.drawKnife(true)
+					// 		window.requestAnimationFrame(this.knifeRun)
+					// 	}
+					// 	break;
 				}
+			},
+			
+			//重新开始
+			resetGameFn(){
+				
+				this.knifeTimes = 0
+				this.isStop = false
+				this.gameStatus = 2
+				this.elAlpha = 1
+				this.firstPlay = true
+				this.knife.dir = 0
+				this.knife.rotate = 0
+				if(this.sumScore > this.bestScore){
+					this.bestScore = this.sumScore
+				}
+				this.sumScore = 0
+				this.randomCircle(1)
+				this.drawKnife(true)
+				this.$refs.gameOver.close()
+				window.requestAnimationFrame(this.knifeRun)
 			},
 			
 			//绘画长刀元素(isDf:true表示回到默认位置)
@@ -205,9 +253,9 @@
 				//每次绘画前先清除画布
 				ctx.clearRect(0,0,w,h)
 				//顶部分数
-				canvasFn.font(ctx,this.sumScore, w*0.5, 40, 40,'#ffffff','center')
-				ctx.drawImage(this.imgUrl + '/game/king.png', 16,14,30,20)
-				canvasFn.font(ctx,this.bestScore, 50, 36, 28,'#fff','left')
+				// canvasFn.font(ctx,this.sumScore, w*0.5, 40, 40,'#ffffff','center')
+				// ctx.drawImage(this.imgUrl + '/game/king.png', 16,14,30,20)
+				// canvasFn.font(ctx,this.bestScore, 50, 36, 28,'#fff','left')
 				
 				switch(this.gameStatus){
 					case 3:	//插入板砖时
@@ -222,14 +270,14 @@
 						
 					case 4:	//游戏结束
 						this.drawCircle()
-						canvasFn.alpha(ctx,1-this.elAlpha,1,()=>{
-							var boxH = h/2 - 90
-							canvasFn.font(ctx,'游戏结束 ' + (this.sumScore>this.bestScore?'新纪录':''), w/2,boxH, 40,'#000','center')
-							canvasFn.font(ctx,`你在小李飞刀中得了 ${this.sumScore} 分，真是` , w/2,boxH + 50, 22,'#000','center')
-							canvasFn.font(ctx,`太棒了，再练练就能得心应手` , w/2,boxH+90, 22,'#000','center')
-							ctx.strokeRect( w/2-100,boxH+140,200,40)
-							canvasFn.font(ctx,`再来一次` , w/2,boxH+160, 20,'#000','center','middle')
-						})
+						// canvasFn.alpha(ctx,1-this.elAlpha,1,()=>{
+						// 	var boxH = h/2 - 90
+						// 	canvasFn.font(ctx,'游戏结束 ' + (this.sumScore>this.bestScore?'新纪录':''), w/2,boxH, 40,'#000','center')
+						// 	canvasFn.font(ctx,`你在小李飞刀中得了 ${this.sumScore} 分，真是` , w/2,boxH + 50, 22,'#000','center')
+						// 	canvasFn.font(ctx,`太棒了，再练练就能得心应手` , w/2,boxH+90, 22,'#000','center')
+						// 	ctx.strokeRect( w/2-100,boxH+140,200,40)
+						// 	canvasFn.font(ctx,`再来一次` , w/2,boxH+160, 20,'#000','center','middle')
+						// })
 						break;
 					default:
 						this.drawKnife()	//小刀1
@@ -265,15 +313,22 @@
 								if(this.knife.y < -this.knife.h){
 									
 									this.gameStatus = 4
-									if(this.elAlpha > 0){
-										this.elAlpha -= .01
-									}else{
-										console.log('this.isStop',this.isStop)
-										this.isStop = true
-										if(this.sumScore>this.bestScore){
-											uni.setStorageSync('flyGameBestScore',this.sumScore)
-										}
+									this.isStop = true
+									if(this.sumScore>this.bestScore){
+										uni.setStorageSync('flyGameBestScore',this.sumScore)
 									}
+									this.$refs.gameOver.open()
+									
+									
+									// if(this.elAlpha > 0){
+									// 	this.elAlpha -= .01
+									// }else{
+									// 	console.log('this.isStop',this.isStop)
+									// 	this.isStop = true
+									// 	if(this.sumScore>this.bestScore){
+									// 		uni.setStorageSync('flyGameBestScore',this.sumScore)
+									// 	}
+									// }
 									
 								}else{	
 									this.knife.y = knifeData.y - 20
@@ -324,6 +379,8 @@
 				this.drawCanvas()
 				if(!this.isStop){window.requestAnimationFrame(this.knifeRun)}
 			},
+			
+			
 			
 			//监听是否击中木板（addScore>0表示击中）
 			checkHitFn(){
@@ -434,7 +491,10 @@
 
 <style lang="scss">
 page{width:100%; height:100%; overflow: hidden;}
-.game_box{width:100%; height:100%; background:#eee; position:relative; background:url(~@/static/images/game/bg02.png) no-repeat center center; background-size:cover;}
+.game_box{
+	width:100%; height:100%; background:#eee; position:relative; 
+	background:url(~@/static/images/game/bg02.png) no-repeat center center; background-size:cover;
+}
 .begin_box{
 	width:100%; height:100%; position:relative;
 	background:url(~@/static/images/game/bg01.jpg) no-repeat center center; background-size:cover;
@@ -443,13 +503,41 @@ page{width:100%; height:100%; overflow: hidden;}
 		font-size:40upx; color:#fff; text-align: center; font-weight: bold;
 	}
 }
-.begin_tip{
-	background:rgba(0,0,0,.5); width:100%; height:100%; position:absolute; left:0; top:0; z-index:100;
-	.des{width:100%; text-align: center; padding-top:300upx; font-size:50upx; color:#fff;}
-	.btn{position:absolute; bottom:300upx; left:50%; margin-left:-250upx; text-align:center; width:500upx; height:100upx; line-height:100upx; color:#fff; font-size:46upx;  text-align: center; border:2upx solid #fff;}
+
+// 开始游戏
+.game_start{
+	width:90%; margin:0 auto; text-align:center;
+	.des{display:block; width:100%; text-align: center; font-size:50upx; line-height:80upx; color:#fff; margin-bottom:100upx;}
+	.btn{ display:inline-block; text-align:center; width:500upx; height:100upx; line-height:100upx; color:#fff; font-size:46upx;  text-align: center; border:2upx solid #fff;}
 }
-.game_canvas_box{width:100%; height:100%;}
-.game_canvas{width:100%; height:100%;}
+
+// 游戏中
+.game_canvas_box{
+	width:100%; height:100%;
+	.game_canvas{width:100%; height:100%;}
+	.game_top{
+		position:fixed; left:0; top:0; z-index:9; width:100%; height:100upx;
+		.num1{
+			float:left; line-height:100upx; font-size:50upx; color:#fff; padding-left:20upx;
+			.img{width:80upx; height:44upx; vertical-align: middle; display:inline-block; position:relative; top:-10upx; margin-right:15upx;}
+		}
+		.num2{
+			position:absolute; left:50%; top:0; text-align:center;
+			width:300upx; margin-left:-150upx; line-height:100upx; height:100upx; 
+			font-size:80upx; font-weight:bold; color:#fff;
+		}
+		.change_btn{float:right; line-height:100upx; font-size:40upx; color:#fff; padding-right:20upx; text-decoration: underline;}
+	}
+}
+// 游戏结束弹窗
+.game_over_box{
+	width:85%; margin:0 auto; color:#fff; text-align:center;
+	.new_img{width:300upx; margin-bottom:40upx;}
+	.tit{font-size:80upx; margin-bottom:50upx;}
+	.des{font-size:40upx; line-height:70upx; margin-bottom: 70upx;;}
+	.btn{font-size:40upx; height:90upx; line-height:90upx; border:2upx solid #fff; display:inline-block; width:500upx; border-radius:45upx;}
+}
+
 
 .choose_img{position:fixed; top:10upx; right:10upx; font-size:40upx; line-height:60upx; color:#fff; text-decoration:underline;}
 </style>
